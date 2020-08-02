@@ -10,9 +10,9 @@ export const Wrapper = styled(motion.div)`
   padding: 3px 9px;
 
   &[data-isopen='true'] {
-    width: 250px;
-    height: 250px;
-    top: calc(100vh - 35em);
+    width: 330px;
+    height: 330px;
+    bottom: -27vh;
     padding: 0;
     box-shadow: 0 0 20px -4px #000000;
     overflow: hidden;

@@ -7,6 +7,15 @@ export const Wrapper = styled.div`
   justify-content: center;
 `;
 
+export const Header = styled.div`
+  display: grid;
+  grid-template-columns: 1fr repeat(2, max-content);
+  grid-column-gap: 12px;
+  font-size: 1.5em;
+  padding: 20px;
+  padding-bottom: 0;
+`;
+
 export const SelectedDate = styled.span`
   white-space: nowrap;
   cursor: pointer;

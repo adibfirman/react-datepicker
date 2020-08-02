@@ -4,10 +4,10 @@ import { createGlobalStyle } from 'styled-components';
 import { Datepicker } from '../src';
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Sniglet&display=swap');
 
   body {
-    font-family: 'Fira Mono', monospace;
+    font-family: 'Sniglet', cursive;
     background-color: #fe4646;
     height: 100vh;
     width: 100%;
