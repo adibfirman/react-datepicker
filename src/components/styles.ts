@@ -15,9 +15,3 @@ export const Header = styled.div`
   padding: 20px;
   padding-bottom: 0;
 `;
-
-export const SelectedDate = styled.span`
-  white-space: nowrap;
-  cursor: pointer;
-  display: block;
-`;

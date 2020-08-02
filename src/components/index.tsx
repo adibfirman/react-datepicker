@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Wrapper, SelectedDate, Header } from './styles';
+import { Wrapper, Header } from './styles';
 import AnimateWrapper from './AnimateWrapper';
 import MonthView from './MonthView';
+import SelectedDate from './SelectedDate';
+import { Provider, useData } from './useGlobalData';
 
 function Datepicker() {
-  const [mode, setMode] = useState<'date' | 'month' | 'year'>('date');
+  const { mode } = useData();
 
   return (
     <Wrapper>
@@ -17,15 +19,19 @@ function Datepicker() {
             <span>{'>'}</span>
           </Header>
         )}
-        {mode === 'date' && (
-          <SelectedDate onClick={() => setMode('month')}>
-            17 Aug 1945
-          </SelectedDate>
-        )}
+        {mode === 'date' && <SelectedDate>17 Aug 1945</SelectedDate>}
         {mode === 'month' && <MonthView />}
       </AnimateWrapper>
     </Wrapper>
   );
 }
 
-export default Datepicker;
+function WrapWithProvider() {
+  return (
+    <Provider>
+      <Datepicker />
+    </Provider>
+  );
+}
+
+export default WrapWithProvider;
