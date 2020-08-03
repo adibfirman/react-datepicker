@@ -33,7 +33,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "datepicker",
+  "name": "@adibfirman/datepicker",
   "author": "adib",
   "module": "dist/datepicker.esm.js",
   "devDependencies": {
