@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const Wrapper = styled.div`
   position: relative;
@@ -7,7 +8,7 @@ export const Wrapper = styled.div`
   justify-content: center;
 `;
 
-export const Header = styled.div`
+export const Header = styled(motion.div)`
   display: grid;
   grid-template-columns: 1fr repeat(2, max-content);
   grid-column-gap: 12px;

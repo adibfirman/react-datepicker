@@ -9,5 +9,5 @@ interface Props extends React.HtmlHTMLAttributes<HTMLSpanElement> {
 
 export default function SelectedDate({ children }: Props) {
   const { setMode } = useData();
-  return <Base onClick={() => setMode('month')}>{children}</Base>;
+  return <Base onClick={() => setMode('date')}>{children}</Base>;
 }

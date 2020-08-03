@@ -2,25 +2,28 @@ import React from 'react';
 
 import { Wrapper, Header } from './styles';
 import AnimateWrapper from './AnimateWrapper';
-import MonthView from './MonthView';
+import DatesView from './DatesView';
 import SelectedDate from './SelectedDate';
 import { Provider, useData } from './useGlobalData';
 
 function Datepicker() {
-  const { mode } = useData();
+  const { mode, colors, onHeaderClick } = useData();
 
   return (
     <Wrapper>
-      <AnimateWrapper isOpen={mode === 'month'}>
-        {(mode === 'month' || mode === 'year') && (
-          <Header>
+      <AnimateWrapper>
+        {mode !== 'selected_date' && (
+          <Header
+            animate={{ color: colors.textColor }}
+            onClick={() => onHeaderClick()}
+          >
             <b>August 2020</b>
             <span>{'<'}</span>
             <span>{'>'}</span>
           </Header>
         )}
-        {mode === 'date' && <SelectedDate>17 Aug 1945</SelectedDate>}
-        {mode === 'month' && <MonthView />}
+        {mode === 'selected_date' && <SelectedDate>17 Aug 1945</SelectedDate>}
+        {mode === 'date' && <DatesView />}
       </AnimateWrapper>
     </Wrapper>
   );
