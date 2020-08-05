@@ -1,20 +1,37 @@
-import React, { createContext, useMemo, useContext, useState } from 'react';
+import React, {
+  createContext,
+  useRef,
+  useMemo,
+  useContext,
+  useState,
+} from 'react';
+import { useAnimation, AnimationControls } from 'framer-motion';
 
-type calenderType = 'selected_date' | 'date' | 'month' | 'year';
+type CalendarType = 'selected_date' | 'date' | 'month' | 'year';
+export type ColorsType = { bgColor: string; textColor: string };
 type state = {
-  colors: { bgColor: string; textColor: string };
+  colors: ColorsType;
   onHeaderClick: Function;
   title: string;
-  mode: calenderType;
-  setMode: React.Dispatch<React.SetStateAction<calenderType>>;
+  mode: CalendarType;
+  setMode: React.Dispatch<React.SetStateAction<CalendarType>>;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
+  triggerAnimation: (childEle: HTMLElement) => void;
+  animateBgColor: AnimationControls;
+  refEleParent: { current: HTMLDivElement };
+};
+
+type PropsType = {
+  children: React.ReactChild;
 };
 
 const context = createContext<state | undefined>(undefined);
 
-export function Provider({ children }: { children: React.ReactChild }) {
+export function Provider({ children }: PropsType) {
   const [title, setTitle] = useState('');
-  const [mode, setMode] = useState<calenderType>('selected_date');
+  const [mode, setMode] = useState<CalendarType>('month');
+  const animateBgColor = useAnimation();
+  const refEleParent = useRef<HTMLDivElement>(null!);
   const colors = useMemo(() => {
     let bgColor: string = '#fff';
     let textColor: string = '#000';
@@ -23,7 +40,8 @@ export function Provider({ children }: { children: React.ReactChild }) {
       bgColor = '#2196f3';
       textColor = '#fff';
     } else if (mode === 'year') {
-      (bgColor = '#39373A'), (textColor = '#fff');
+      bgColor = '#39373A';
+      textColor = '#fff';
     }
 
     return { bgColor, textColor } as const;
@@ -33,9 +51,30 @@ export function Provider({ children }: { children: React.ReactChild }) {
     if (mode === 'date') setMode('month');
   }
 
+  function triggerAnimation(childEle: HTMLElement) {
+    const parentEle = refEleParent.current;
+    const parentBoundRect = parentEle?.getBoundingClientRect();
+    const childBoundRect = childEle.getBoundingClientRect();
+
+    const top = childBoundRect.top - (parentBoundRect?.top ?? 0);
+    const left = childBoundRect.left - (parentBoundRect?.left ?? 0);
+
+    console.log(top, left);
+  }
+
   return (
     <context.Provider
-      value={{ title, onHeaderClick, mode, setMode, setTitle, colors }}
+      value={{
+        refEleParent,
+        animateBgColor,
+        title,
+        onHeaderClick,
+        mode,
+        setMode,
+        setTitle,
+        colors,
+        triggerAnimation,
+      }}
     >
       {children}
     </context.Provider>
