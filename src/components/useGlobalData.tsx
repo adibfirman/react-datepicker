@@ -7,8 +7,13 @@ import React, {
 } from 'react';
 import { useAnimation, AnimationControls } from 'framer-motion';
 
-type CalendarType = 'selected_date' | 'date' | 'month' | 'year';
 export type ColorsType = { bgColor: string; textColor: string };
+type CalendarType = 'selected_date' | 'date' | 'month' | 'year';
+type TriggerAnimationType = {
+  childEle: HTMLElement;
+  mode: CalendarType;
+  currMode: CalendarType;
+};
 type state = {
   colors: ColorsType;
   onHeaderClick: Function;
@@ -16,33 +21,34 @@ type state = {
   mode: CalendarType;
   setMode: React.Dispatch<React.SetStateAction<CalendarType>>;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
-  triggerAnimation: (childEle: HTMLElement) => void;
+  triggerAnimation: ({ childEle, mode }: TriggerAnimationType) => void;
   animateBgColor: AnimationControls;
   refEleParent: { current: HTMLDivElement };
+  prevColors: ColorsType | null;
 };
 
 type PropsType = {
   children: React.ReactChild;
 };
 
+type ColorDataType = Record<CalendarType, ColorsType>;
+
 const context = createContext<state | undefined>(undefined);
+const COLOR_DATA: ColorDataType = {
+  date: { textColor: '#000', bgColor: '#fff' },
+  month: { textColor: '#fff', bgColor: '#2196f3' },
+  year: { textColor: '#fff', bgColor: '#39373A' },
+  selected_date: { textColor: '#000', bgColor: '#fff' },
+};
 
 export function Provider({ children }: PropsType) {
   const [title, setTitle] = useState('');
   const [mode, setMode] = useState<CalendarType>('month');
+  const [prevColors, setPrevColors] = useState<ColorsType | null>(null);
   const animateBgColor = useAnimation();
   const refEleParent = useRef<HTMLDivElement>(null!);
   const colors = useMemo(() => {
-    let bgColor: string = '#fff';
-    let textColor: string = '#000';
-
-    if (mode === 'month') {
-      bgColor = '#2196f3';
-      textColor = '#fff';
-    } else if (mode === 'year') {
-      bgColor = '#39373A';
-      textColor = '#fff';
-    }
+    const { bgColor, textColor } = COLOR_DATA[mode];
 
     return { bgColor, textColor } as const;
   }, [mode]);
@@ -51,7 +57,11 @@ export function Provider({ children }: PropsType) {
     if (mode === 'date') setMode('month');
   }
 
-  function triggerAnimation(childEle: HTMLElement) {
+  async function triggerAnimation({
+    childEle,
+    mode,
+    currMode,
+  }: TriggerAnimationType) {
     const parentEle = refEleParent.current;
     const parentBoundRect = parentEle?.getBoundingClientRect();
     const childBoundRect = childEle.getBoundingClientRect();
@@ -59,12 +69,50 @@ export function Provider({ children }: PropsType) {
     const top = childBoundRect.top - (parentBoundRect?.top ?? 0);
     const left = childBoundRect.left - (parentBoundRect?.left ?? 0);
 
-    console.log(top, left);
+    const { bgColor } = COLOR_DATA[mode];
+
+    setPrevColors(COLOR_DATA[currMode]);
+
+    await animateBgColor.start({
+      x: left + 25,
+      y: top + 10,
+      transition: {
+        stiffness: 0,
+      },
+    });
+
+    await animateBgColor.start({
+      backgroundColor: bgColor,
+      scale: 70,
+      transition: {
+        type: 'spring',
+        stiffness: 50,
+        restSpeed: 2,
+        restDelta: 5,
+      },
+    });
+
+    setPrevColors(null);
+
+    await animateBgColor.start({
+      backgroundColor: 'rgba(255, 255, 255, 0)',
+      transition: {
+        type: 'spring',
+        velocity: 50000,
+      },
+    });
+
+    animateBgColor.start({
+      width: 10,
+      height: 10,
+      scale: 0,
+    });
   }
 
   return (
     <context.Provider
       value={{
+        prevColors,
         refEleParent,
         animateBgColor,
         title,

@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import { Wrapper } from './styles';
+import { WrapperList, Wrapper } from './styles';
 import { useData } from '../useGlobalData';
+import Header from '../Header';
 
 const LIST_MONTH = [
   'jan',
@@ -20,15 +21,6 @@ const LIST_MONTH = [
 ];
 
 const ANIMATED = {
-  initial: {
-    width: '59%',
-    height: '47%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 19,
-    cursor: 'pointer',
-  },
   whileHover: {
     backgroundColor: 'rgb(255 255 255)',
     color: '#000',
@@ -37,26 +29,33 @@ const ANIMATED = {
 };
 
 export default function MonthView() {
-  const { colors, triggerAnimation } = useData();
+  const { colors, triggerAnimation, setMode, mode } = useData();
 
   function onClick(e: React.MouseEvent<HTMLSpanElement>) {
     const ele = e.target as HTMLElement;
-    triggerAnimation(ele);
+    triggerAnimation({ childEle: ele, mode: 'date', currMode: mode });
+    setMode('date');
   }
 
   return (
-    <Wrapper {...colors}>
-      {LIST_MONTH.map((month, i) => (
-        <motion.span
-          onClick={onClick}
-          variants={ANIMATED}
-          initial="initial"
-          whileHover="whileHover"
-          key={i}
-        >
-          {month}
-        </motion.span>
-      ))}
+    <Wrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <Header />
+      <WrapperList {...colors}>
+        {LIST_MONTH.map((month, i) => (
+          <motion.span
+            onClick={onClick}
+            variants={ANIMATED}
+            whileHover="whileHover"
+            key={i}
+          >
+            {month}
+          </motion.span>
+        ))}
+      </WrapperList>
     </Wrapper>
   );
 }

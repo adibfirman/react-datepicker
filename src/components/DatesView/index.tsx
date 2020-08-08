@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 import { Wrapper, BaseWeek, BaseMonth } from './styles';
+import Header from '../Header';
 
 function useListMonth() {
   const year = new Date().getFullYear();
@@ -23,7 +24,12 @@ export default function MonthView() {
   const { list: days, additionalDayNextMonth } = useListMonth();
 
   return (
-    <Wrapper animate={{ opacity: 1 }} initial={{ opacity: 0 }}>
+    <Wrapper
+      animate={{ scale: 1 }}
+      transition={{ delay: 0.29, type: 'tween' }}
+      initial={{ scale: 0 }}
+    >
+      <Header />
       <BaseWeek>
         <span>M</span>
         <span>T</span>

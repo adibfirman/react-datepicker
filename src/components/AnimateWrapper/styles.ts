@@ -3,19 +3,21 @@ import { motion } from 'framer-motion';
 
 export const Wrapper = styled(motion.div)`
   position: absolute;
-  background-color: #fff;
   font-weight: bold;
   font-size: 13px;
-  border-radius: 10px;
   padding: 3px 9px;
   overflow: hidden;
+  width: 81px;
+  height: 19px;
+  border-radius: 20px;
 
   &[data-isopen='true'] {
     width: 330px;
     height: 330px;
     bottom: -27vh;
     padding: 0;
-    box-shadow: 0 0 20px -4px #000000;
+    border-radius: 3px;
+    box-shadow: 8px 12px 20px 0px #0000005e;
     overflow: hidden;
   }
 `;

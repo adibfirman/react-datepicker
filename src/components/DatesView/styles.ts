@@ -3,10 +3,9 @@ import { motion } from 'framer-motion';
 
 export const Wrapper = styled(motion.div)`
   padding: 20px;
-  padding-top: 0;
-  height: 80%;
+  height: 88%;
   display: grid;
-  grid-template-rows: max-content 1fr;
+  grid-template-rows: repeat(2, max-content) 1fr;
 `;
 
 const baseStyleGrid = css`
