@@ -3,12 +3,17 @@ import React from 'react';
 import { Base } from './styles';
 import { useData } from '../useGlobalData';
 
-export default function Header() {
-  const { colors, onHeaderClick } = useData();
+interface IProps {
+  text: string;
+  onTitleClick?: (args: React.MouseEvent<HTMLDivElement>) => void;
+}
+
+export default function Header({ text, onTitleClick }: IProps) {
+  const { colors } = useData();
 
   return (
-    <Base animate={{ color: colors.textColor }} onClick={() => onHeaderClick()}>
-      <b>August 2020</b>
+    <Base animate={{ color: colors.textColor }} onClick={onTitleClick}>
+      <b>{text}</b>
       <span>{'<'}</span>
       <span>{'>'}</span>
     </Base>

@@ -23,21 +23,22 @@ function useListMonth() {
 
 export default function MonthView() {
   const { list: days, additionalDayNextMonth } = useListMonth();
-  const { setMode } = useData();
+  const { setMode, prevMode } = useData();
+  const transition = {
+    delay: 0.48,
+    type: 'spring',
+    stiffness: 100,
+    restDelta: 5,
+    restSpeed: 2,
+  };
 
   return (
     <Wrapper
-      animate={{ scale: 1 }}
-      initial={{ scale: 0 }}
-      transition={{
-        delay: 0.45,
-        type: 'spring',
-        stiffness: 100,
-        restDelta: 5,
-        restSpeed: 2,
-      }}
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      transition={prevMode === 'month' ? transition : {}}
     >
-      <Header />
+      <Header text="August 2020" onTitleClick={() => setMode('month')} />
       <BaseWeek>
         <span>M</span>
         <span>T</span>

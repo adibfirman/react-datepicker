@@ -7,6 +7,7 @@ import DatesView from './DatesView';
 import SelectedDate from './SelectedDate';
 import { Provider, useData } from './useGlobalData';
 import MonthView from './MonthView';
+import YearView from './YearView';
 
 function Datepicker() {
   const { mode } = useData();
@@ -18,6 +19,7 @@ function Datepicker() {
           {mode === 'selected_date' && <SelectedDate>17 Aug 1945</SelectedDate>}
           {mode === 'date' && <DatesView />}
           {mode === 'month' && <MonthView />}
+          {mode === 'year' && <YearView />}
         </AnimatePresence>
       </AnimateWrapper>
     </Wrapper>

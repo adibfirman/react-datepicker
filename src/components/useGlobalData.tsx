@@ -17,7 +17,6 @@ type TriggerAnimationType = {
 };
 type state = {
   colors: ColorsType;
-  onHeaderClick: Function;
   title: string;
   mode: CalendarType;
   setMode: React.Dispatch<React.SetStateAction<CalendarType>>;
@@ -36,7 +35,7 @@ type PropsType = {
 type ColorDataType = Record<CalendarType, ColorsType>;
 
 const context = createContext<state | undefined>(undefined);
-const COLOR_DATA: ColorDataType = {
+export const COLOR_DATA: ColorDataType = {
   date: { textColor: '#000', bgColor: '#fff' },
   month: { textColor: '#fff', bgColor: '#2196f3' },
   year: { textColor: '#fff', bgColor: '#39373A' },
@@ -45,7 +44,7 @@ const COLOR_DATA: ColorDataType = {
 
 export function Provider({ children }: PropsType) {
   const [title, setTitle] = useState('');
-  const [mode, setMode] = useState<CalendarType>('selected_date');
+  const [mode, setMode] = useState<CalendarType>('year');
   const prevMode = usePrevious(mode);
   const [prevColors, setPrevColors] = useState<ColorsType | null>(null);
   const animateBgColor = useAnimation();
@@ -55,10 +54,6 @@ export function Provider({ children }: PropsType) {
 
     return { bgColor, textColor } as const;
   }, [mode]);
-
-  function onHeaderClick() {
-    if (mode === 'date') setMode('month');
-  }
 
   async function triggerAnimation({
     childEle,
@@ -122,7 +117,6 @@ export function Provider({ children }: PropsType) {
         refEleParent,
         animateBgColor,
         title,
-        onHeaderClick,
         mode,
         setMode,
         setTitle,

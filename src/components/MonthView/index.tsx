@@ -29,7 +29,14 @@ const ANIMATED = {
 };
 
 export default function MonthView() {
-  const { colors, triggerAnimation, setMode, mode } = useData();
+  const { colors, prevMode, triggerAnimation, setMode, mode } = useData();
+  const transition = {
+    delay: 0.48,
+    type: 'spring',
+    stiffness: 100,
+    restDelta: 5,
+    restSpeed: 2,
+  };
 
   function onClick(e: React.MouseEvent<HTMLSpanElement>) {
     const ele = e.target as HTMLElement;
@@ -38,8 +45,12 @@ export default function MonthView() {
   }
 
   return (
-    <Wrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      <Header />
+    <Wrapper
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      transition={prevMode === 'year' ? transition : {}}
+    >
+      <Header text="2020" onTitleClick={() => setMode('year')} />
       <WrapperList {...colors}>
         {LIST_MONTH.map((month, i) => (
           <motion.span
