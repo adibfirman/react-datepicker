@@ -5,17 +5,26 @@ import { useData } from '../useGlobalData';
 
 interface IProps {
   text: string;
+  hideNavigation?: boolean;
   onTitleClick?: (args: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-export default function Header({ text, onTitleClick }: IProps) {
+export default function Header({
+  text,
+  onTitleClick,
+  hideNavigation = false,
+}: IProps) {
   const { colors } = useData();
 
   return (
     <Base animate={{ color: colors.textColor }} onClick={onTitleClick}>
       <b>{text}</b>
-      <span>{'<'}</span>
-      <span>{'>'}</span>
+      {!hideNavigation && (
+        <>
+          <span>{'<'}</span>
+          <span>{'>'}</span>
+        </>
+      )}
     </Base>
   );
 }

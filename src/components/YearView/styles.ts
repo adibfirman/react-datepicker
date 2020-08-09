@@ -27,5 +27,10 @@ export const WrapperList = styled.div<ColorsType>`
     justify-content: center;
     border-radius: 20px;
     cursor: pointer;
+
+    &[data-isselected='true'] {
+      background-color: #2196f3;
+      color: #fff;
+    }
   }
 `;

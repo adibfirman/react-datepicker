@@ -26,6 +26,6 @@ export default {
 export const Preview = () => (
   <>
     <GlobalStyle />
-    <Datepicker />
+    <Datepicker currentDate={new Date()} />
   </>
 );

@@ -14,7 +14,8 @@ const ANIMATED = {
 };
 
 export default function YearView() {
-  const { colors, triggerAnimation, setMode, mode: currMode } = useData();
+  const { colors, triggerAnimation, setMode, ...data } = useData();
+  const { year: selectedYear } = data.currentDate;
   const years = useMemo(() => {
     const lengthData = 20;
     const thisYear = new Date().getFullYear();
@@ -37,7 +38,7 @@ export default function YearView() {
     const ele = e.target as HTMLElement;
     const mode = 'month';
 
-    triggerAnimation({ childEle: ele, mode, currMode });
+    triggerAnimation({ childEle: ele, mode, currMode: data.mode });
     setMode(mode);
   }
 
@@ -51,6 +52,7 @@ export default function YearView() {
             variants={ANIMATED}
             custom={{ colors: COLOR_DATA.month }}
             whileHover="whileHover"
+            data-isselected={year === selectedYear}
             key={i}
           >
             {year}

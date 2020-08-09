@@ -15,7 +15,12 @@ type TriggerAnimationType = {
   mode: CalendarType;
   currMode: CalendarType;
 };
-type state = {
+
+export interface IValueComponent {
+  currentDate?: Date;
+}
+
+type StateType = {
   colors: ColorsType;
   title: string;
   mode: CalendarType;
@@ -26,15 +31,17 @@ type state = {
   refEleParent: { current: HTMLDivElement };
   prevColors: ColorsType | null;
   prevMode: CalendarType | undefined;
+  currentDate: { date: number; month: number; year: number; objDate: Date };
 };
 
 type PropsType = {
   children: React.ReactChild;
+  value: IValueComponent;
 };
 
 type ColorDataType = Record<CalendarType, ColorsType>;
 
-const context = createContext<state | undefined>(undefined);
+const context = createContext<StateType | undefined>(undefined);
 export const COLOR_DATA: ColorDataType = {
   date: { textColor: '#000', bgColor: '#fff' },
   month: { textColor: '#fff', bgColor: '#2196f3' },
@@ -42,9 +49,9 @@ export const COLOR_DATA: ColorDataType = {
   selected_date: { textColor: '#000', bgColor: '#fff' },
 };
 
-export function Provider({ children }: PropsType) {
+export function Provider({ children, ...props }: PropsType) {
   const [title, setTitle] = useState('');
-  const [mode, setMode] = useState<CalendarType>('year');
+  const [mode, setMode] = useState<CalendarType>('selected_date');
   const prevMode = usePrevious(mode);
   const [prevColors, setPrevColors] = useState<ColorsType | null>(null);
   const animateBgColor = useAnimation();
@@ -54,6 +61,19 @@ export function Provider({ children }: PropsType) {
 
     return { bgColor, textColor } as const;
   }, [mode]);
+
+  // this memoize will be generated like { date: 01, month: 12, year: 2020 }
+  const spreadTheDate = useMemo(() => {
+    const getDate = props.value?.currentDate ?? new Date();
+    const data = {
+      date: getDate.getDate(),
+      month: getDate.getMonth() + 1,
+      year: getDate.getFullYear(),
+      objDate: getDate,
+    };
+
+    return data;
+  }, []);
 
   async function triggerAnimation({
     childEle,
@@ -112,6 +132,7 @@ export function Provider({ children }: PropsType) {
   return (
     <context.Provider
       value={{
+        currentDate: spreadTheDate,
         prevMode,
         prevColors,
         refEleParent,

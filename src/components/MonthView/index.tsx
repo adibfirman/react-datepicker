@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { format } from 'date-fns';
 
 import { WrapperList, Wrapper } from './styles';
-import { useData } from '../useGlobalData';
+import { useData, COLOR_DATA, ColorsType } from '../useGlobalData';
 import Header from '../Header';
 
 const LIST_MONTH = [
@@ -21,17 +22,18 @@ const LIST_MONTH = [
 ];
 
 const ANIMATED = {
-  whileHover: {
-    backgroundColor: 'rgb(255 255 255)',
-    color: '#000',
-    transition: { type: 'spring', stiffness: 100 },
-  },
+  whileHover: ({ colors }: { colors: ColorsType }) => ({
+    backgroundColor: colors.bgColor,
+    color: colors.textColor,
+  }),
 };
 
 export default function MonthView() {
-  const { colors, prevMode, triggerAnimation, setMode, mode } = useData();
+  const { colors, prevMode, triggerAnimation, setMode, ...data } = useData();
+  const { objDate } = data.currentDate;
+  const selectedMonthText = format(objDate, 'MMM').toLocaleLowerCase();
   const transition = {
-    delay: 0.48,
+    delay: 0.38,
     type: 'spring',
     stiffness: 100,
     restDelta: 5,
@@ -40,7 +42,7 @@ export default function MonthView() {
 
   function onClick(e: React.MouseEvent<HTMLSpanElement>) {
     const ele = e.target as HTMLElement;
-    triggerAnimation({ childEle: ele, mode: 'date', currMode: mode });
+    triggerAnimation({ childEle: ele, mode: 'date', currMode: data.mode });
     setMode('date');
   }
 
@@ -50,14 +52,20 @@ export default function MonthView() {
       initial={{ opacity: 0 }}
       transition={prevMode === 'year' ? transition : {}}
     >
-      <Header text="2020" onTitleClick={() => setMode('year')} />
+      <Header
+        text={format(objDate, 'yyyy')}
+        onTitleClick={() => setMode('year')}
+        hideNavigation
+      />
       <WrapperList {...colors}>
         {LIST_MONTH.map((month, i) => (
           <motion.span
+            key={i}
             onClick={onClick}
             variants={ANIMATED}
             whileHover="whileHover"
-            key={i}
+            data-isselected={month === selectedMonthText}
+            custom={{ colors: COLOR_DATA.date }}
           >
             {month}
           </motion.span>

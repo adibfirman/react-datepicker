@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { format } from 'date-fns';
 
 import { Wrapper, BaseWeek, BaseMonth } from './styles';
 import Header from '../Header';
@@ -21,11 +22,12 @@ function useListMonth() {
   return { list, additionalDayNextMonth };
 }
 
-export default function MonthView() {
+export default function DatesView() {
   const { list: days, additionalDayNextMonth } = useListMonth();
-  const { setMode, prevMode } = useData();
+  const { setMode, prevMode, currentDate } = useData();
+  const { date, objDate } = currentDate;
   const transition = {
-    delay: 0.48,
+    delay: 0.38,
     type: 'spring',
     stiffness: 100,
     restDelta: 5,
@@ -38,7 +40,10 @@ export default function MonthView() {
       initial={{ opacity: 0 }}
       transition={prevMode === 'month' ? transition : {}}
     >
-      <Header text="August 2020" onTitleClick={() => setMode('month')} />
+      <Header
+        text={format(objDate, 'MMMM yyyy')}
+        onTitleClick={() => setMode('month')}
+      />
       <BaseWeek>
         <span>M</span>
         <span>T</span>
@@ -54,9 +59,9 @@ export default function MonthView() {
             key={day}
             onClick={() => setMode('selected_date')}
             initial={{ borderRadius: '100%' }}
-            data-isselected={day === 2}
+            data-isselected={day === date}
             transition={{ type: 'tween' }}
-            whileHover={day !== 2 ? { backgroundColor: '#ECEAED' } : {}}
+            whileHover={day !== date ? { backgroundColor: '#ECEAED' } : {}}
           >
             {day}
           </motion.span>
