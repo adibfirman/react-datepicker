@@ -73,7 +73,7 @@ export function Provider({ children, ...props }: PropsType) {
     };
 
     return data;
-  }, []);
+  }, [props.value.currentDate]);
 
   async function triggerAnimation({
     childEle,

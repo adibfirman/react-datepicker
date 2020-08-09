@@ -61,7 +61,10 @@ export default function DatesView() {
             initial={{ borderRadius: '100%' }}
             data-isselected={day === date}
             transition={{ type: 'tween' }}
-            whileHover={day !== date ? { backgroundColor: '#ECEAED' } : {}}
+            className={day > date ? 'disabled' : ''}
+            whileHover={
+              day !== date && day < date ? { backgroundColor: '#ECEAED' } : {}
+            }
           >
             {day}
           </motion.span>
