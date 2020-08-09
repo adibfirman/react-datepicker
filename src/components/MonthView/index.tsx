@@ -38,11 +38,7 @@ export default function MonthView() {
   }
 
   return (
-    <Wrapper
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <Wrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <Header />
       <WrapperList {...colors}>
         {LIST_MONTH.map((month, i) => (

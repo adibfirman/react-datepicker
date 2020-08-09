@@ -6,6 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { useAnimation, AnimationControls } from 'framer-motion';
+import { usePrevious } from '../utils';
 
 export type ColorsType = { bgColor: string; textColor: string };
 type CalendarType = 'selected_date' | 'date' | 'month' | 'year';
@@ -25,6 +26,7 @@ type state = {
   animateBgColor: AnimationControls;
   refEleParent: { current: HTMLDivElement };
   prevColors: ColorsType | null;
+  prevMode: CalendarType | undefined;
 };
 
 type PropsType = {
@@ -43,7 +45,8 @@ const COLOR_DATA: ColorDataType = {
 
 export function Provider({ children }: PropsType) {
   const [title, setTitle] = useState('');
-  const [mode, setMode] = useState<CalendarType>('month');
+  const [mode, setMode] = useState<CalendarType>('selected_date');
+  const prevMode = usePrevious(mode);
   const [prevColors, setPrevColors] = useState<ColorsType | null>(null);
   const animateBgColor = useAnimation();
   const refEleParent = useRef<HTMLDivElement>(null!);
@@ -98,7 +101,9 @@ export function Provider({ children }: PropsType) {
       backgroundColor: 'rgba(255, 255, 255, 0)',
       transition: {
         type: 'spring',
-        velocity: 50000,
+        stiffness: 100,
+        restSpeed: 2,
+        restDelta: 5,
       },
     });
 
@@ -112,6 +117,7 @@ export function Provider({ children }: PropsType) {
   return (
     <context.Provider
       value={{
+        prevMode,
         prevColors,
         refEleParent,
         animateBgColor,

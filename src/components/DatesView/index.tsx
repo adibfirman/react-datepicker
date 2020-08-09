@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 
 import { Wrapper, BaseWeek, BaseMonth } from './styles';
 import Header from '../Header';
+import { useData } from '../useGlobalData';
 
 function useListMonth() {
   const year = new Date().getFullYear();
@@ -22,12 +23,19 @@ function useListMonth() {
 
 export default function MonthView() {
   const { list: days, additionalDayNextMonth } = useListMonth();
+  const { setMode } = useData();
 
   return (
     <Wrapper
       animate={{ scale: 1 }}
-      transition={{ delay: 0.29, type: 'tween' }}
       initial={{ scale: 0 }}
+      transition={{
+        delay: 0.45,
+        type: 'spring',
+        stiffness: 100,
+        restDelta: 5,
+        restSpeed: 2,
+      }}
     >
       <Header />
       <BaseWeek>
@@ -43,6 +51,7 @@ export default function MonthView() {
         {days.map(day => (
           <motion.span
             key={day}
+            onClick={() => setMode('selected_date')}
             initial={{ borderRadius: '100%' }}
             data-isselected={day === 2}
             transition={{ type: 'tween' }}

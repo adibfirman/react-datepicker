@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 
 import { Wrapper, WrapperChildren } from './styles';
 import { useData } from '../useGlobalData';
-import { usePrevious } from '../../utils';
 
 interface IProps {
   children: any;
@@ -23,10 +22,10 @@ export default function AnimateWrapper({ children, isOpen }: IProps) {
 
   return (
     <Wrapper
-      ref={refEleParent}
       layout
+      ref={refEleParent}
       data-isopen={isOpen}
-      animate={{ backgroundColor: prevColors?.bgColor || colors.bgColor }}
+      style={{ backgroundColor: prevColors?.bgColor || colors.bgColor }}
     >
       {isOpen && (
         <motion.div style={VARIANTS_BOX_STYLE} animate={animateBgColor} />

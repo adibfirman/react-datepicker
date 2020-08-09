@@ -34,7 +34,7 @@
     "trailingComma": "es5"
   },
   "name": "@adibfirman/datepicker",
-  "author": "adib",
+  "author": "adibfirman",
   "module": "dist/datepicker.esm.js",
   "devDependencies": {
     "@babel/core": "^7.11.0",
