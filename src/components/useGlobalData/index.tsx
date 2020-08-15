@@ -5,55 +5,25 @@ import React, {
   useContext,
   useState,
 } from 'react';
-import { useAnimation, AnimationControls } from 'framer-motion';
-import { usePrevious } from '../utils';
+import { useAnimation } from 'framer-motion';
+import { usePrevious } from '../../utils';
+import * as Types from './types';
 
-export type ColorsType = { bgColor: string; textColor: string };
-type CalendarType = 'selected_date' | 'date' | 'month' | 'year';
-type TriggerAnimationType = {
-  childEle: HTMLElement;
-  mode: CalendarType;
-  currMode: CalendarType;
-};
+const context = createContext<Types.StateType | undefined>(undefined);
 
-export interface IValueComponent {
-  currentDate?: Date;
-}
-
-type StateType = {
-  colors: ColorsType;
-  title: string;
-  mode: CalendarType;
-  setMode: React.Dispatch<React.SetStateAction<CalendarType>>;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
-  triggerAnimation: ({ childEle, mode }: TriggerAnimationType) => void;
-  animateBgColor: AnimationControls;
-  refEleParent: { current: HTMLDivElement };
-  prevColors: ColorsType | null;
-  prevMode: CalendarType | undefined;
-  currentDate: { date: number; month: number; year: number; objDate: Date };
-};
-
-type PropsType = {
-  children: React.ReactChild;
-  value: IValueComponent;
-};
-
-type ColorDataType = Record<CalendarType, ColorsType>;
-
-const context = createContext<StateType | undefined>(undefined);
-export const COLOR_DATA: ColorDataType = {
+export { Types };
+export const COLOR_DATA: Types.ColorDataType = {
   date: { textColor: '#000', bgColor: '#fff' },
   month: { textColor: '#fff', bgColor: '#2196f3' },
   year: { textColor: '#fff', bgColor: '#39373A' },
   selected_date: { textColor: '#000', bgColor: '#fff' },
 };
 
-export function Provider({ children, ...props }: PropsType) {
+export function Provider({ children, ...props }: Types.PropsType) {
   const [title, setTitle] = useState('');
-  const [mode, setMode] = useState<CalendarType>('selected_date');
+  const [mode, setMode] = useState<Types.CalendarType>('selected_date');
   const prevMode = usePrevious(mode);
-  const [prevColors, setPrevColors] = useState<ColorsType | null>(null);
+  const [prevColors, setPrevColors] = useState<Types.ColorsType | null>(null);
   const animateBgColor = useAnimation();
   const refEleParent = useRef<HTMLDivElement>(null!);
   const colors = useMemo(() => {
@@ -79,7 +49,7 @@ export function Provider({ children, ...props }: PropsType) {
     childEle,
     mode,
     currMode,
-  }: TriggerAnimationType) {
+  }: Types.TriggerAnimationType) {
     const parentEle = refEleParent.current;
     const parentBoundRect = parentEle?.getBoundingClientRect();
     const childBoundRect = childEle.getBoundingClientRect();

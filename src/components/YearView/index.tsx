@@ -2,11 +2,11 @@ import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 import { WrapperList, Wrapper } from './styles';
-import { useData, ColorsType, COLOR_DATA } from '../useGlobalData';
+import { useData, Types, COLOR_DATA } from '../useGlobalData';
 import Header from '../Header';
 
 const ANIMATED = {
-  whileHover: ({ colors }: { colors: ColorsType }) => ({
+  whileHover: ({ colors }: { colors: Types.ColorsType }) => ({
     backgroundColor: colors.bgColor,
     color: colors.textColor,
     transition: { type: 'spring', stiffness: 100 },

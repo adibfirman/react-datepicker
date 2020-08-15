@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-import { ColorsType } from '../useGlobalData';
+import { Types } from '../useGlobalData';
 
 export const Wrapper = styled(motion.div)`
   display: flex;
@@ -10,7 +10,7 @@ export const Wrapper = styled(motion.div)`
   padding: 20px;
 `;
 
-export const WrapperList = styled.div<ColorsType>`
+export const WrapperList = styled.div<Types.ColorsType>`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(5em, 1fr));
   justify-items: center;

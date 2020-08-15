@@ -6,7 +6,7 @@ import { Wrapper } from './styles';
 import AnimateWrapper from './AnimateWrapper';
 import DatesView from './DatesView';
 import SelectedDate from './SelectedDate';
-import { Provider, useData, IValueComponent } from './useGlobalData';
+import { Provider, useData, Types } from './useGlobalData';
 import MonthView from './MonthView';
 import YearView from './YearView';
 
@@ -31,7 +31,7 @@ function Datepicker() {
   );
 }
 
-function WrapWithProvider({ currentDate }: IValueComponent) {
+function WrapWithProvider({ currentDate }: Types.IValueComponent) {
   return (
     <Provider value={{ currentDate }}>
       <Datepicker />

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 
 import { WrapperList, Wrapper } from './styles';
-import { useData, COLOR_DATA, ColorsType } from '../useGlobalData';
+import { useData, COLOR_DATA, Types } from '../useGlobalData';
 import Header from '../Header';
 
 const LIST_MONTH = [
@@ -22,7 +22,7 @@ const LIST_MONTH = [
 ];
 
 const ANIMATED = {
-  whileHover: ({ colors }: { colors: ColorsType }) => ({
+  whileHover: ({ colors }: { colors: Types.ColorsType }) => ({
     backgroundColor: colors.bgColor,
     color: colors.textColor,
   }),
