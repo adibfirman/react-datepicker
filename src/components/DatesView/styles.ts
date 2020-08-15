@@ -1,12 +1,4 @@
 import styled, { css } from 'styled-components';
-import { motion } from 'framer-motion';
-
-export const Wrapper = styled(motion.div)`
-  padding: 20px;
-  height: 88%;
-  display: grid;
-  grid-template-rows: repeat(2, max-content) 1fr;
-`;
 
 const baseStyleGrid = css`
   display: grid;

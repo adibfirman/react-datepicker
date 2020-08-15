@@ -2,44 +2,19 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 
-import { Wrapper, BaseWeek, BaseMonth } from './styles';
+import { BaseWeek, BaseMonth } from './styles';
 import Header from '../Header';
 import { useData } from '../useGlobalData';
-
-function useListMonth() {
-  const year = new Date().getFullYear();
-  const month = new Date().getMonth() + 1;
-  const totalDaysThisMonth = new Date(year, month, 0).getDate();
-  const maxGenereateList = 35;
-  const additionalDayNextMonth = Array(maxGenereateList - totalDaysThisMonth)
-    .fill(null)
-    .map((_, i) => i + 1);
-
-  const list = Array(totalDaysThisMonth)
-    .fill(null)
-    .map((_, i) => i + 1);
-
-  return { list, additionalDayNextMonth };
-}
+import { useListMonth } from './useHooks';
+import { AnimateContent } from '../AnimateContent';
 
 export default function DatesView() {
   const { list: days, additionalDayNextMonth } = useListMonth();
-  const { setMode, prevMode, currentDate } = useData();
+  const { setMode, currentDate } = useData();
   const { date, objDate } = currentDate;
-  const transition = {
-    delay: 0.38,
-    type: 'spring',
-    stiffness: 100,
-    restDelta: 5,
-    restSpeed: 2,
-  };
 
   return (
-    <Wrapper
-      animate={{ opacity: 1 }}
-      initial={{ opacity: 0 }}
-      transition={prevMode === 'month' ? transition : {}}
-    >
+    <AnimateContent selectedPrevMode="month">
       <Header
         text={format(objDate, 'MMMM yyyy')}
         onTitleClick={() => setMode('month')}
@@ -75,6 +50,6 @@ export default function DatesView() {
           </span>
         ))}
       </BaseMonth>
-    </Wrapper>
+    </AnimateContent>
   );
 }
