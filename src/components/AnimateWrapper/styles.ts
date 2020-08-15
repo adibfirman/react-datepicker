@@ -28,3 +28,11 @@ export const WrapperChildren = styled.div`
   z-index: 3;
   position: absolute;
 `;
+
+export const BaseCircleAnimate = styled(motion.div)`
+  width: 10;
+  height: 10;
+  position: 'absolute';
+  z-index: 0;
+  border-radius: 'inherit';
+`;

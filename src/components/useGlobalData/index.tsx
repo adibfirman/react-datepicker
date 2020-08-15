@@ -11,7 +11,6 @@ import * as Types from './types';
 
 const context = createContext<Types.StateType | undefined>(undefined);
 
-export { Types };
 export const COLOR_DATA: Types.ColorDataType = {
   date: { textColor: '#000', bgColor: '#fff' },
   month: { textColor: '#fff', bgColor: '#2196f3' },
@@ -127,3 +126,5 @@ export function useData() {
 
   return getData;
 }
+
+export { Types };

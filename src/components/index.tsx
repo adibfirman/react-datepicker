@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 
 import { Wrapper } from './styles';
-import AnimateWrapper from './AnimateWrapper';
+import { AnimateWrapper } from './AnimateWrapper';
 import DatesView from './DatesView';
 import SelectedDate from './SelectedDate';
 import { Provider, useData, Types } from './useGlobalData';
@@ -15,7 +15,7 @@ function Datepicker() {
 
   return (
     <Wrapper>
-      <AnimateWrapper isOpen={mode !== 'selected_date'}>
+      <AnimateWrapper>
         <AnimatePresence>
           {mode === 'selected_date' && (
             <SelectedDate>
