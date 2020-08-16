@@ -3,8 +3,9 @@ import { motion } from 'framer-motion';
 
 import { Types, useData } from '../useGlobalData';
 
-interface IProps {
+interface IProps extends React.HtmlHTMLAttributes<HTMLElement> {
   selectedPrevMode?: Types.CalendarType;
+  withTransitionWhen?: boolean;
 }
 
 const TRANSITION_ANIMATION = {
@@ -18,14 +19,18 @@ const TRANSITION_ANIMATION = {
 export function AnimateContent({
   children,
   selectedPrevMode,
+  withTransitionWhen = false,
+  onClick,
 }: React.PropsWithChildren<IProps>) {
   const { prevMode } = useData();
+  const usingTransition = withTransitionWhen || prevMode === selectedPrevMode;
 
   return (
     <motion.div
       animate={{ opacity: 1 }}
       initial={{ opacity: 0, height: '100%' }}
-      transition={prevMode === selectedPrevMode ? TRANSITION_ANIMATION : {}}
+      transition={usingTransition ? TRANSITION_ANIMATION : {}}
+      onClick={onClick}
     >
       {children}
     </motion.div>

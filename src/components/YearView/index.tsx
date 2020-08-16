@@ -46,7 +46,7 @@ export function YearView() {
   return (
     <AnimateContent>
       <Wrapper>
-        <Header text="Year" />
+        <Header text="Year" hideArrowInText />
         <WrapperList {...colors}>
           {years.map((year, i) => (
             <motion.span

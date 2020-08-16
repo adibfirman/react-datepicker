@@ -7,7 +7,7 @@ export const Wrapper = styled(motion.div)`
   font-size: 13px;
   padding: 3px 9px;
   overflow: hidden;
-  width: 81px;
+  width: 99px;
   height: 19px;
   border-radius: 20px;
 

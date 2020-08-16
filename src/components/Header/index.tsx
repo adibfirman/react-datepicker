@@ -1,28 +1,28 @@
 import React from 'react';
 
-import { Base } from './styles';
+import { Base, WrapperTitle } from './styles';
 import { useData } from '../useGlobalData';
-
-interface IProps {
-  text: string;
-  hideNavigation?: boolean;
-  onTitleClick?: (args: React.MouseEvent<HTMLDivElement>) => void;
-}
+import * as Types from './types';
+import { ArrowRight, ArrowLeft, ArrowDown } from '../Arrow';
 
 export default function Header({
   text,
   onTitleClick,
   hideNavigation = false,
-}: IProps) {
+  hideArrowInText = false,
+}: Types.IProps) {
   const { colors } = useData();
 
   return (
     <Base animate={{ color: colors.textColor }} onClick={onTitleClick}>
-      <b>{text}</b>
+      <WrapperTitle>
+        <b>{text}</b>
+        {!hideArrowInText && <ArrowDown borderColor={colors.textColor} />}
+      </WrapperTitle>
       {!hideNavigation && (
         <>
-          <span>{'<'}</span>
-          <span>{'>'}</span>
+          <ArrowLeft borderColor={colors.textColor} />
+          <ArrowRight borderColor={colors.textColor} />
         </>
       )}
     </Base>
