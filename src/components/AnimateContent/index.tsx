@@ -1,6 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
-import { Base } from './styles';
 import { Types, useData } from '../useGlobalData';
 
 interface IProps {
@@ -22,12 +22,12 @@ export function AnimateContent({
   const { prevMode } = useData();
 
   return (
-    <Base
+    <motion.div
       animate={{ opacity: 1 }}
-      initial={{ opacity: 0 }}
+      initial={{ opacity: 0, height: '100%' }}
       transition={prevMode === selectedPrevMode ? TRANSITION_ANIMATION : {}}
     >
       {children}
-    </Base>
+    </motion.div>
   );
 }

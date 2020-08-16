@@ -1,5 +1,12 @@
 import styled, { css } from 'styled-components';
 
+export const Wrapper = styled.div`
+  padding: 20px;
+  height: 88%;
+  display: grid;
+  grid-template-rows: repeat(2, max-content) 1fr;
+`;
+
 const baseStyleGrid = css`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
