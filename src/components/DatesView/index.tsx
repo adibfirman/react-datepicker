@@ -8,7 +8,7 @@ import { useData } from '../useGlobalData';
 import { useListMonth } from './useHooks';
 import { AnimateContent } from '../AnimateContent';
 
-export default function DatesView() {
+export function DatesView() {
   const { list: days, additionalDayNextMonth } = useListMonth();
   const { setMode, currentDate } = useData();
   const { date, objDate } = currentDate;

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { WrapperList, Wrapper } from './styles';
 import { useData, Types, COLOR_DATA } from '../useGlobalData';
 import Header from '../Header';
+import { AnimateContent } from '../AnimateContent';
 
 const ANIMATED = {
   whileHover: ({ colors }: { colors: Types.ColorsType }) => ({
@@ -13,7 +14,7 @@ const ANIMATED = {
   }),
 };
 
-export default function YearView() {
+export function YearView() {
   const { colors, triggerAnimation, setMode, ...data } = useData();
   const { year: selectedYear } = data.currentDate;
   const years = useMemo(() => {
@@ -43,22 +44,24 @@ export default function YearView() {
   }
 
   return (
-    <Wrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      <Header text="Year" />
-      <WrapperList {...colors}>
-        {years.map((year, i) => (
-          <motion.span
-            onClick={onClick}
-            variants={ANIMATED}
-            custom={{ colors: COLOR_DATA.month }}
-            whileHover="whileHover"
-            data-isselected={year === selectedYear}
-            key={i}
-          >
-            {year}
-          </motion.span>
-        ))}
-      </WrapperList>
-    </Wrapper>
+    <AnimateContent>
+      <Wrapper>
+        <Header text="Year" />
+        <WrapperList {...colors}>
+          {years.map((year, i) => (
+            <motion.span
+              onClick={onClick}
+              variants={ANIMATED}
+              custom={{ colors: COLOR_DATA.month }}
+              whileHover="whileHover"
+              data-isselected={year === selectedYear}
+              key={i}
+            >
+              {year}
+            </motion.span>
+          ))}
+        </WrapperList>
+      </Wrapper>
+    </AnimateContent>
   );
 }

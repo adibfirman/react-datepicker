@@ -4,11 +4,11 @@ import { format } from 'date-fns';
 
 import { Wrapper } from './styles';
 import { AnimateWrapper } from './AnimateWrapper';
-import DatesView from './DatesView';
+import { DatesView } from './DatesView';
 import SelectedDate from './SelectedDate';
 import { Provider, useData, Types } from './useGlobalData';
-import MonthView from './MonthView';
-import YearView from './YearView';
+import { MonthView } from './MonthView';
+import { YearView } from './YearView';
 
 function Datepicker() {
   const { mode, currentDate } = useData();

@@ -8,7 +8,7 @@ import Header from '../Header';
 import { AnimateContent } from '../AnimateContent';
 import { LIST_MONTH, ANIMATED_EACH_OF_MONTH } from './constants';
 
-export default function MonthView() {
+export function MonthView() {
   const { colors, prevMode, triggerAnimation, setMode, ...data } = useData();
   const { objDate } = data.currentDate;
   const selectedMonthText = format(objDate, 'MMM').toLocaleLowerCase();
