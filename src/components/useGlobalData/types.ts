@@ -14,18 +14,27 @@ export interface IValueComponent {
   currentDate?: Date;
 }
 
+export type SetModeType = React.Dispatch<React.SetStateAction<CalendarType>>;
+
+export type DateType = {
+  date: number;
+  month: number;
+  year: number;
+};
+
 export type StateType = {
   colors: ColorsType;
   title: string;
   mode: CalendarType;
-  setMode: React.Dispatch<React.SetStateAction<CalendarType>>;
+  setMode: SetModeType;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   triggerAnimation: ({ childEle, mode }: TriggerAnimationType) => void;
   animateBgColor: AnimationControls;
   refEleParent: { current: HTMLDivElement };
   prevColors: ColorsType | null;
   prevMode: CalendarType | undefined;
-  currentDate: { date: number; month: number; year: number; objDate: Date };
+  currentDate: DateType;
+  setDate: (SetDateType: Partial<DateType>) => void;
 };
 
 export type PropsType = {

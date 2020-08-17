@@ -7,17 +7,19 @@ import Header from '../Header';
 import { useData } from '../useGlobalData';
 import { useListMonth } from './useHooks';
 import { AnimateContent } from '../AnimateContent';
+import * as Types from './types';
 
 export function DatesView() {
   const { list: days, additionalDayNextMonth } = useListMonth();
   const { setMode, currentDate } = useData();
-  const { date, objDate } = currentDate;
+  const { year, month, date } = currentDate;
+  const dateObject = new Date(year, month, date);
 
   return (
     <AnimateContent selectedPrevMode="month">
       <Wrapper>
         <Header
-          text={format(objDate, 'MMMM yyyy')}
+          text={format(dateObject, 'MMMM yyyy')}
           onTitleClick={() => setMode('month')}
         />
         <BaseWeek>
@@ -31,27 +33,36 @@ export function DatesView() {
         </BaseWeek>
         <BaseMonth>
           {days.map(day => (
-            <motion.span
-              key={day}
-              onClick={() => setMode('selected_date')}
-              initial={{ borderRadius: '100%' }}
-              data-isselected={day === date}
-              transition={{ type: 'tween' }}
-              className={day > date ? 'disabled' : ''}
-              whileHover={
-                day !== date && day < date ? { backgroundColor: '#ECEAED' } : {}
-              }
-            >
-              {day}
-            </motion.span>
+            <ShowDate key={day} day={day} date={date} setMode={setMode} />
           ))}
-          {additionalDayNextMonth.map(day => (
-            <span key={day} className="disabled">
+          {additionalDayNextMonth.map((day, i) => (
+            <span key={i} className="disabled">
               {day}
             </span>
           ))}
         </BaseMonth>
       </Wrapper>
     </AnimateContent>
+  );
+}
+
+function ShowDate({ day, date, setMode }: Types.IPropsDate) {
+  const grantedDay = day !== date && day < date;
+
+  function handlelClick() {
+    if (grantedDay || day === date) setMode('selected_date');
+  }
+
+  return (
+    <motion.span
+      onClick={handlelClick}
+      initial={{ borderRadius: '100%' }}
+      data-isselected={day === date}
+      transition={{ type: 'tween' }}
+      className={day > date ? 'disabled' : ''}
+      whileHover={grantedDay ? { backgroundColor: '#ECEAED' } : {}}
+    >
+      {day}
+    </motion.span>
   );
 }

@@ -15,7 +15,7 @@ const ANIMATED = {
 };
 
 export function YearView() {
-  const { colors, triggerAnimation, setMode, ...data } = useData();
+  const { colors, triggerAnimation, setDate, setMode, ...data } = useData();
   const { year: selectedYear } = data.currentDate;
   const years = useMemo(() => {
     const lengthData = 20;
@@ -35,12 +35,15 @@ export function YearView() {
     return list;
   }, []);
 
-  function onClick(e: React.MouseEvent<HTMLSpanElement>) {
-    const ele = e.target as HTMLElement;
-    const mode = 'month';
+  function onClick(year: number) {
+    return (e: React.MouseEvent<HTMLSpanElement>) => {
+      const ele = e.target as HTMLElement;
+      const mode = 'month';
 
-    triggerAnimation({ childEle: ele, mode, currMode: data.mode });
-    setMode(mode);
+      triggerAnimation({ childEle: ele, mode, currMode: data.mode });
+      setDate({ year });
+      setMode(mode);
+    };
   }
 
   return (
@@ -50,7 +53,7 @@ export function YearView() {
         <WrapperList {...colors}>
           {years.map((year, i) => (
             <motion.span
-              onClick={onClick}
+              onClick={onClick(year)}
               variants={ANIMATED}
               custom={{ colors: COLOR_DATA.month }}
               whileHover="whileHover"

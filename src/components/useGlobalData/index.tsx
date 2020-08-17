@@ -31,18 +31,18 @@ export function Provider({ children, ...props }: Types.PropsType) {
     return { bgColor, textColor } as const;
   }, [mode]);
 
-  // this memoize will be generated like { date: 01, month: 12, year: 2020 }
-  const spreadTheDate = useMemo(() => {
+  const [currentDate, setCurrentDate] = useState<Types.DateType>(() => {
     const getDate = props.value?.currentDate ?? new Date();
-    const data = {
+    return {
       date: getDate.getDate(),
-      month: getDate.getMonth() + 1,
+      month: getDate.getMonth(),
       year: getDate.getFullYear(),
-      objDate: getDate,
     };
+  });
 
-    return data;
-  }, [props.value.currentDate]);
+  function setDate(newDate: Partial<Types.DateType>) {
+    setCurrentDate(prevDate => ({ ...prevDate, ...newDate }));
+  }
 
   async function triggerAnimation({
     childEle,
@@ -101,7 +101,8 @@ export function Provider({ children, ...props }: Types.PropsType) {
   return (
     <context.Provider
       value={{
-        currentDate: spreadTheDate,
+        setDate,
+        currentDate,
         prevMode,
         prevColors,
         refEleParent,
