@@ -14,10 +14,14 @@ export function MonthView() {
   const dateObject = new Date(year, month, date);
   const selectedMonthText = format(dateObject, 'MMM').toLocaleLowerCase();
 
-  function onClick(e: React.MouseEvent<HTMLSpanElement>) {
-    const ele = e.target as HTMLElement;
-    triggerAnimation({ childEle: ele, mode: 'date', currMode: data.mode });
-    setMode('date');
+  function onClick(month: number) {
+    return (e: React.MouseEvent<HTMLSpanElement>) => {
+      const ele = e.target as HTMLElement;
+      triggerAnimation({ childEle: ele, mode: 'date', currMode: data.mode });
+
+      data.setDate({ month });
+      setMode('date');
+    };
   }
 
   return (
@@ -32,7 +36,7 @@ export function MonthView() {
           {LIST_MONTH.map((month, i) => (
             <motion.span
               key={i}
-              onClick={onClick}
+              onClick={onClick(i)}
               variants={ANIMATED_EACH_OF_MONTH}
               whileHover="whileHover"
               data-isselected={month === selectedMonthText}
