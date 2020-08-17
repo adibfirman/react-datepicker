@@ -22,6 +22,8 @@ export type DateType = {
   year: number;
 };
 
+export type SetDateType = (SetDateType: Partial<DateType>) => void;
+
 export type StateType = {
   colors: ColorsType;
   title: string;
@@ -34,7 +36,7 @@ export type StateType = {
   prevColors: ColorsType | null;
   prevMode: CalendarType | undefined;
   currentDate: DateType;
-  setDate: (SetDateType: Partial<DateType>) => void;
+  setDate: SetDateType;
 };
 
 export type PropsType = {

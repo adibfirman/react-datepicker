@@ -11,7 +11,7 @@ import * as Types from './types';
 
 export function DatesView() {
   const { list: days, additionalDayNextMonth } = useListMonth();
-  const { setMode, currentDate } = useData();
+  const { setMode, currentDate, setDate } = useData();
   const { year, month, date } = currentDate;
   const dateObject = new Date(year, month, date);
 
@@ -33,7 +33,13 @@ export function DatesView() {
         </BaseWeek>
         <BaseMonth>
           {days.map(day => (
-            <ShowDate key={day} day={day} date={date} setMode={setMode} />
+            <ShowDate
+              key={day}
+              day={day}
+              date={date}
+              setMode={setMode}
+              setDate={setDate}
+            />
           ))}
           {additionalDayNextMonth.map((day, i) => (
             <span key={i} className="disabled">
@@ -46,11 +52,15 @@ export function DatesView() {
   );
 }
 
-function ShowDate({ day, date, setMode }: Types.IPropsDate) {
-  const grantedDay = day !== date && day < date;
+function ShowDate({ day, date, setMode, setDate }: Types.IPropsDate) {
+  const today = new Date().getDate();
+  const grantedDay = day !== date && day < today;
 
   function handlelClick() {
-    if (grantedDay || day === date) setMode('selected_date');
+    if (grantedDay || day === date) {
+      setDate({ date: day });
+      setMode('selected_date');
+    }
   }
 
   return (
@@ -59,7 +69,7 @@ function ShowDate({ day, date, setMode }: Types.IPropsDate) {
       initial={{ borderRadius: '100%' }}
       data-isselected={day === date}
       transition={{ type: 'tween' }}
-      className={day > date ? 'disabled' : ''}
+      className={day > today ? 'disabled' : ''}
       whileHover={grantedDay ? { backgroundColor: '#ECEAED' } : {}}
     >
       {day}
