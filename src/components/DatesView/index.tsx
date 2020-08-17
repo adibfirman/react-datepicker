@@ -36,6 +36,7 @@ export function DatesView() {
             <ShowDate
               key={day}
               day={day}
+              month={month}
               date={date}
               setMode={setMode}
               setDate={setDate}
@@ -52,7 +53,7 @@ export function DatesView() {
   );
 }
 
-function ShowDate({ day, date, setMode, setDate }: Types.IPropsDate) {
+function ShowDate({ day, date, month, setMode, setDate }: Types.IPropsDate) {
   const today = new Date().getDate();
   const grantedDay = day !== date && day < today;
 

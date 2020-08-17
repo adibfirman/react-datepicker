@@ -1,11 +1,11 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Default as Thing } from '../stories/Thing.stories';
+import { Preview as Datepicker } from '../stories/Datepicker.stories';
 
-describe('Thing', () => {
+describe('<Datepicker />', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Thing />, div);
+    ReactDOM.render(<Datepicker />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 });
