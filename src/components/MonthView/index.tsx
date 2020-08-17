@@ -10,10 +10,9 @@ import { LIST_MONTH, ANIMATED_EACH_OF_MONTH } from './constants';
 
 export function MonthView() {
   const { colors, prevMode, triggerAnimation, setMode, ...data } = useData();
-  const selectedMonthText = format(
-    data.currentDateObj,
-    'MMM'
-  ).toLocaleLowerCase();
+  const { currentDateObj, currentDate } = data;
+  const { month: currMonth, year } = currentDate;
+  const selectedMonthText = format(currentDateObj, 'MMM').toLocaleLowerCase();
 
   function onClick(month: number) {
     return (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -29,7 +28,7 @@ export function MonthView() {
     <AnimateContent selectedPrevMode="year">
       <Wrapper>
         <Header
-          text={format(data.currentDateObj, 'yyyy')}
+          text={!currMonth ? year : format(currentDateObj, 'yyyy')}
           onTitleClick={() => setMode('year')}
           hideNavigation
         />
@@ -40,7 +39,7 @@ export function MonthView() {
               onClick={onClick(i)}
               variants={ANIMATED_EACH_OF_MONTH}
               whileHover="whileHover"
-              data-isselected={month === selectedMonthText}
+              data-isselected={!!currMonth && month === selectedMonthText}
               custom={{ colors: COLOR_DATA.date }}
             >
               {month}

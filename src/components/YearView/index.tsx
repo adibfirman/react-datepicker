@@ -41,7 +41,7 @@ export function YearView() {
       const mode = 'month';
 
       triggerAnimation({ childEle: ele, mode, currMode: data.mode });
-      setDate({ year });
+      setDate({ year, month: undefined });
       setMode(mode);
     };
   }
