@@ -10,16 +10,15 @@ import { AnimateContent } from '../AnimateContent';
 import * as Types from './types';
 
 export function DatesView() {
-  const { setMode, currentDate, setDate } = useData();
+  const { setMode, currentDate, setDate, currentDateObj } = useData();
   const { year, month, date } = currentDate;
   const { list: days, additionalDayNextMonth } = useListMonth({ year, month });
-  const dateObject = new Date(year, month, date);
 
   return (
     <AnimateContent selectedPrevMode="month">
       <Wrapper>
         <Header
-          text={format(dateObject, 'MMMM yyyy')}
+          text={format(currentDateObj, 'MMMM yyyy')}
           onTitleClick={() => setMode('month')}
         />
         <BaseWeek>
@@ -36,7 +35,6 @@ export function DatesView() {
             <ShowDate
               key={day}
               day={day}
-              month={month}
               date={date}
               setMode={setMode}
               setDate={setDate}
@@ -53,15 +51,10 @@ export function DatesView() {
   );
 }
 
-function ShowDate({ day, date, month, setMode, setDate }: Types.IPropsDate) {
-  const today = new Date().getDate();
-  const grantedDay = day !== date && day < today;
-
+function ShowDate({ day, date, setMode, setDate }: Types.IPropsDate) {
   function handlelClick() {
-    if (grantedDay || day === date) {
-      setDate({ date: day });
-      setMode('selected_date');
-    }
+    setDate({ date: day });
+    setMode('selected_date');
   }
 
   return (
@@ -70,8 +63,7 @@ function ShowDate({ day, date, month, setMode, setDate }: Types.IPropsDate) {
       initial={{ borderRadius: '100%' }}
       data-isselected={day === date}
       transition={{ type: 'tween' }}
-      className={day > today ? 'disabled' : ''}
-      whileHover={grantedDay ? { backgroundColor: '#ECEAED' } : {}}
+      whileHover={{ backgroundColor: '#ECEAED' }}
     >
       {day}
     </motion.span>

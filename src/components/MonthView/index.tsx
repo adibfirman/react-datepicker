@@ -10,16 +10,17 @@ import { LIST_MONTH, ANIMATED_EACH_OF_MONTH } from './constants';
 
 export function MonthView() {
   const { colors, prevMode, triggerAnimation, setMode, ...data } = useData();
-  const { year, month, date } = data.currentDate;
-  const dateObject = new Date(year, month, date);
-  const selectedMonthText = format(dateObject, 'MMM').toLocaleLowerCase();
+  const selectedMonthText = format(
+    data.currentDateObj,
+    'MMM'
+  ).toLocaleLowerCase();
 
   function onClick(month: number) {
     return (e: React.MouseEvent<HTMLSpanElement>) => {
       const ele = e.target as HTMLElement;
       triggerAnimation({ childEle: ele, mode: 'date', currMode: data.mode });
 
-      data.setDate({ month });
+      data.setDate({ month, date: undefined });
       setMode('date');
     };
   }
@@ -28,7 +29,7 @@ export function MonthView() {
     <AnimateContent selectedPrevMode="year">
       <Wrapper>
         <Header
-          text={format(dateObject, 'yyyy')}
+          text={format(data.currentDateObj, 'yyyy')}
           onTitleClick={() => setMode('year')}
           hideNavigation
         />

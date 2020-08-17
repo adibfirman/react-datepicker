@@ -7,9 +7,7 @@ import { ArrowDown } from '../Arrow';
 import { AnimateContent } from '../AnimateContent';
 
 export function SelectedDate() {
-  const { setMode, prevMode, currentDate } = useData();
-  const { year, month, date } = currentDate;
-  const dateObject = new Date(year, month, date);
+  const { setMode, prevMode, currentDateObj } = useData();
 
   return (
     <AnimateContent
@@ -17,7 +15,7 @@ export function SelectedDate() {
       onClick={() => setMode('date')}
     >
       <Base>
-        {format(dateObject, 'dd MMM yyyy')} <ArrowDown />
+        {format(currentDateObj, 'dd MMM yyyy')} <ArrowDown />
       </Base>
     </AnimateContent>
   );

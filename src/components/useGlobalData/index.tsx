@@ -34,11 +34,16 @@ export function Provider({ children, ...props }: Types.PropsType) {
   const [currentDate, setCurrentDate] = useState<Types.DateType>(() => {
     const getDate = props.value?.currentDate ?? new Date();
     return {
-      date: getDate.getDate(),
-      month: getDate.getMonth(),
       year: getDate.getFullYear(),
+      month: getDate.getMonth(),
+      date: getDate.getDate(),
     };
   });
+
+  const currentDateObj = useMemo(() => {
+    const dateValues = Object.values(currentDate).filter(date => date);
+    return new Date(...(dateValues as [number, number, number]));
+  }, [currentDate]);
 
   function setDate(newDate: Partial<Types.DateType>) {
     setCurrentDate(prevDate => ({ ...prevDate, ...newDate }));
@@ -101,6 +106,7 @@ export function Provider({ children, ...props }: Types.PropsType) {
   return (
     <context.Provider
       value={{
+        currentDateObj,
         setDate,
         currentDate,
         prevMode,

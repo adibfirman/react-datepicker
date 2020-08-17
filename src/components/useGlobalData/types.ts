@@ -37,6 +37,7 @@ export type StateType = {
   prevMode: CalendarType | undefined;
   currentDate: DateType;
   setDate: SetDateType;
+  currentDateObj: Date;
 };
 
 export type PropsType = {
