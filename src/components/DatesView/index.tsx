@@ -10,9 +10,9 @@ import { AnimateContent } from '../AnimateContent';
 import * as Types from './types';
 
 export function DatesView() {
-  const { list: days, additionalDayNextMonth } = useListMonth();
   const { setMode, currentDate, setDate } = useData();
   const { year, month, date } = currentDate;
+  const { list: days, additionalDayNextMonth } = useListMonth({ year, month });
   const dateObject = new Date(year, month, date);
 
   return (

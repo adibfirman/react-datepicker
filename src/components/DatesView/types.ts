@@ -6,3 +6,8 @@ export interface IPropsDate {
   setMode: Types.SetModeType;
   setDate: Types.SetDateType;
 }
+
+export interface IUseListMonth {
+  month: number;
+  year: number;
+}
