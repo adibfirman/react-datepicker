@@ -20,7 +20,7 @@ export const COLOR_DATA: Types.ColorDataType = {
 
 export function Provider({ children, ...props }: Types.PropsType) {
   const [title, setTitle] = useState('');
-  const [mode, setMode] = useState<Types.CalendarType>('selected_date');
+  const [mode, setMode] = useState<Types.CalendarType>('date');
   const prevMode = usePrevious(mode);
   const [prevColors, setPrevColors] = useState<Types.ColorsType | null>(null);
   const animateBgColor = useAnimation();
@@ -41,7 +41,7 @@ export function Provider({ children, ...props }: Types.PropsType) {
   });
 
   const currentDateObj = useMemo(() => {
-    const dateValues = Object.values(currentDate).filter(date => date);
+    const dateValues = Object.values(currentDate).filter(date => !isNaN(date));
     return new Date(...(dateValues as [number, number, number]));
   }, [currentDate]);
 

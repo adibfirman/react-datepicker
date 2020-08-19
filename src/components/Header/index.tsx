@@ -10,19 +10,21 @@ export default function Header({
   onTitleClick,
   hideNavigation = false,
   hideArrowInText = false,
+  onRightClick,
+  onLeftClick,
 }: Types.IProps) {
   const { colors } = useData();
 
   return (
-    <Base animate={{ color: colors.textColor }} onClick={onTitleClick}>
-      <WrapperTitle>
+    <Base animate={{ color: colors.textColor }}>
+      <WrapperTitle onClick={onTitleClick}>
         <b>{text}</b>
         {!hideArrowInText && <ArrowDown borderColor={colors.textColor} />}
       </WrapperTitle>
       {!hideNavigation && (
         <>
-          <ArrowLeft borderColor={colors.textColor} />
-          <ArrowRight borderColor={colors.textColor} />
+          <ArrowLeft onClick={onLeftClick} borderColor={colors.textColor} />
+          <ArrowRight onClick={onRightClick} borderColor={colors.textColor} />
         </>
       )}
     </Base>

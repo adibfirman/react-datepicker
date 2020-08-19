@@ -28,7 +28,7 @@ export function MonthView() {
     <AnimateContent selectedPrevMode="year">
       <Wrapper>
         <Header
-          text={!currMonth ? year : format(currentDateObj, 'yyyy')}
+          text={!currMonth ? year.toString() : format(currentDateObj, 'yyyy')}
           onTitleClick={() => setMode('year')}
           hideNavigation
         />

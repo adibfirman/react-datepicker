@@ -3,4 +3,6 @@ export interface IProps {
   hideNavigation?: boolean;
   onTitleClick?: (args: React.MouseEvent<HTMLDivElement>) => void;
   hideArrowInText?: boolean;
+  onRightClick?: () => void;
+  onLeftClick?: () => void;
 }

@@ -29,6 +29,7 @@ export const BaseWeek = styled.div`
 export const BaseMonth = styled.div`
   ${baseStyleGrid}
   margin-top: unset;
+  height: 100%;
 
   span {
     width: 61%;
@@ -37,6 +38,7 @@ export const BaseMonth = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 100%;
 
     &[data-isselected='true'] {
       background-color: #2196f3;
