@@ -20,7 +20,7 @@ export const COLOR_DATA: Types.ColorDataType = {
 
 export function Provider({ children, ...props }: Types.PropsType) {
   const [title, setTitle] = useState('');
-  const [mode, setMode] = useState<Types.CalendarType>('date');
+  const [mode, setMode] = useState<Types.CalendarType>('year');
   const prevMode = usePrevious(mode);
   const [prevColors, setPrevColors] = useState<Types.ColorsType | null>(null);
   const animateBgColor = useAnimation();

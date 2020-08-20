@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import { WrapperList, Wrapper } from './styles';
 import { useData, Types, COLOR_DATA } from '../useGlobalData';
 import Header from '../Header';
 import { AnimateContent } from '../AnimateContent';
+import { SliderAnimate } from '../SliderAnimate';
+import { usePrevious } from '../../utils';
 
 const ANIMATED = {
   whileHover: ({ colors }: { colors: Types.ColorsType }) => ({
@@ -14,26 +16,35 @@ const ANIMATED = {
   }),
 };
 
+const MAX_LIST_OF_YEARS = 20;
+
+function generateListYears(lastYear: number) {
+  const list: number[] = [];
+
+  for (let i = 1; i <= MAX_LIST_OF_YEARS; i++) {
+    if (list.length === 0) list.push(lastYear);
+    else {
+      const firstList = list[0];
+      const increaseYear = firstList - 1;
+
+      list.unshift(increaseYear);
+    }
+  }
+
+  return list;
+}
+
 export function YearView() {
   const { colors, triggerAnimation, setDate, setMode, ...data } = useData();
   const { year: selectedYear } = data.currentDate;
-  const years = useMemo(() => {
-    const lengthData = 20;
+  const [page, setPage] = useState(0);
+  const prevPage = usePrevious(page);
+  const [years, setYears] = useState(() => {
     const thisYear = new Date().getFullYear();
-    const list: number[] = [];
-
-    for (let i = 1; i <= lengthData; i++) {
-      if (list.length === 0) list.push(thisYear);
-      else {
-        const firstList = list[0];
-        const increaseYear = firstList - 1;
-
-        list.unshift(increaseYear);
-      }
-    }
+    const list = generateListYears(thisYear);
 
     return list;
-  }, []);
+  });
 
   function onClick(year: number) {
     return (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -46,24 +57,51 @@ export function YearView() {
     };
   }
 
+  function onNextPage() {
+    const getLastYear = years[years.length - 1] + MAX_LIST_OF_YEARS;
+    const generateYears = generateListYears(getLastYear);
+
+    setYears(generateYears);
+    setPage(prevPage => prevPage + 1);
+  }
+
+  function onPrevPage() {
+    const getLastYear = years[0] - 1;
+    const generateYears = generateListYears(getLastYear);
+
+    setYears(generateYears);
+    setPage(prevPage => prevPage - 1);
+  }
+
   return (
     <AnimateContent>
       <Wrapper>
-        <Header text="Year" hideArrowInText />
-        <WrapperList {...colors}>
-          {years.map((year, i) => (
-            <motion.span
-              onClick={onClick(year)}
-              variants={ANIMATED}
-              custom={{ colors: COLOR_DATA.month }}
-              whileHover="whileHover"
-              data-isselected={year === selectedYear}
-              key={i}
-            >
-              {year}
-            </motion.span>
-          ))}
-        </WrapperList>
+        <Header
+          text="Year"
+          hideArrowInText
+          onLeftClick={onPrevPage}
+          onRightClick={onNextPage}
+        />
+        <SliderAnimate
+          height="95%"
+          isMoveToLeft={(prevPage ?? 0) > page}
+          customKey={page}
+        >
+          <WrapperList {...colors}>
+            {years.map((year, i) => (
+              <motion.span
+                onClick={onClick(year)}
+                variants={ANIMATED}
+                custom={{ colors: COLOR_DATA.month }}
+                whileHover="whileHover"
+                data-isselected={year === selectedYear}
+                key={i}
+              >
+                {year}
+              </motion.span>
+            ))}
+          </WrapperList>
+        </SliderAnimate>
       </Wrapper>
     </AnimateContent>
   );

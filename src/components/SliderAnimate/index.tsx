@@ -6,7 +6,7 @@ import * as Types from './types';
 
 const variants = {
   enter: (isMoveToLeft: boolean) => ({
-    x: isMoveToLeft ? 1000 : -1000,
+    x: isMoveToLeft ? -1000 : 1000,
     opacity: 0,
   }),
   center: {
@@ -15,14 +15,14 @@ const variants = {
     opacity: 1,
   },
   exit: (isMoveToLeft: boolean) => ({
-    x: isMoveToLeft ? -1000 : 1000,
+    x: isMoveToLeft ? 1000 : -1000,
     position: 'absolute',
     opacity: 0,
   }),
 };
 
 const transition = {
-  x: { type: 'spring', stiffness: 100, damping: 200 },
+  x: { type: 'spring', stiffness: 99, damping: 200 },
   opacity: { duration: 1 },
 };
 
@@ -30,6 +30,7 @@ export function SliderAnimate({
   children,
   isMoveToLeft,
   customKey,
+  height = '100%',
 }: React.PropsWithChildren<Types.IProps>) {
   return (
     <Wrapper>
@@ -41,7 +42,7 @@ export function SliderAnimate({
           initial="enter"
           animate="center"
           exit="exit"
-          style={{ height: '100%', width: '100%' }}
+          style={{ height, width: '100%' }}
           transition={transition}
         >
           {children}
