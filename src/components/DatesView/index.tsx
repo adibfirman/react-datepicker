@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 
@@ -8,24 +8,32 @@ import { useData } from '../useGlobalData';
 import { useListMonth } from './useHooks';
 import { AnimateContent } from '../AnimateContent';
 import * as Types from './types';
-import { usePrevious } from '../../utils';
 import { SliderAnimate } from '../SliderAnimate';
 
 export function DatesView() {
   const { setMode, currentDate, setDate } = useData();
   const { year, month, date } = currentDate;
   const { list: days, additionalDayNextMonth } = useListMonth({ year, month });
-  const prevMonth = usePrevious(month);
-  const goToNextMonth = (prevMonth ?? 0) > month;
+  const [isMoveLeft, setMoveLeft] = useState(false);
+
+  function handleNextMonth() {
+    setMoveLeft(false);
+    setDate({ month: month + 1, date: undefined });
+  }
+
+  function handlePrevMonth() {
+    setMoveLeft(true);
+    setDate({ month: month - 1, date: undefined });
+  }
 
   return (
     <AnimateContent selectedPrevMode="month">
       <Wrapper>
         <Header
-          text={<TextHeader goToNextMonth={goToNextMonth} />}
+          text={<TextHeader goToNextMonth={isMoveLeft} />}
           onTitleClick={() => setMode('month')}
-          onRightClick={() => setDate({ month: month + 1, date: undefined })}
-          onLeftClick={() => setDate({ month: month - 1, date: undefined })}
+          onRightClick={handleNextMonth}
+          onLeftClick={handlePrevMonth}
         />
         <BaseWeek>
           <span>M</span>
@@ -36,7 +44,7 @@ export function DatesView() {
           <span>S</span>
           <span>S</span>
         </BaseWeek>
-        <SliderAnimate isMoveToLeft={goToNextMonth} customKey={month}>
+        <SliderAnimate isMoveToLeft={isMoveLeft} customKey={month}>
           <BaseMonth>
             {days.map(day => (
               <ShowDate

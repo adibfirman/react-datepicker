@@ -39,6 +39,7 @@ export function YearView() {
   const { year: selectedYear } = data.currentDate;
   const [page, setPage] = useState(0);
   const prevPage = usePrevious(page);
+  const [isMoveLeft, setIsMoveLeft] = useState(false);
   const [years, setYears] = useState(() => {
     const thisYear = new Date().getFullYear();
     const list = generateListYears(thisYear);
@@ -61,6 +62,7 @@ export function YearView() {
     const getLastYear = years[years.length - 1] + MAX_LIST_OF_YEARS;
     const generateYears = generateListYears(getLastYear);
 
+    setIsMoveLeft(false);
     setYears(generateYears);
     setPage(prevPage => prevPage + 1);
   }
@@ -70,6 +72,7 @@ export function YearView() {
     const generateYears = generateListYears(getLastYear);
 
     setYears(generateYears);
+    setIsMoveLeft(true);
     setPage(prevPage => prevPage - 1);
   }
 
@@ -82,11 +85,7 @@ export function YearView() {
           onLeftClick={onPrevPage}
           onRightClick={onNextPage}
         />
-        <SliderAnimate
-          height="95%"
-          isMoveToLeft={(prevPage ?? 0) > page}
-          customKey={page}
-        >
+        <SliderAnimate height="95%" isMoveToLeft={isMoveLeft} customKey={page}>
           <WrapperList {...colors}>
             {years.map((year, i) => (
               <motion.span
