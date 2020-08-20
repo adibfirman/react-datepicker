@@ -1,5 +1,7 @@
+import React from 'react';
+
 export interface IProps {
-  text: string;
+  text: string | React.ReactNode;
   hideNavigation?: boolean;
   onTitleClick?: (args: React.MouseEvent<HTMLDivElement>) => void;
   hideArrowInText?: boolean;

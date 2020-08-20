@@ -18,7 +18,7 @@ export default function Header({
   return (
     <Base animate={{ color: colors.textColor }}>
       <WrapperTitle onClick={onTitleClick}>
-        <b>{text}</b>
+        {typeof text === 'string' ? <b>{text}</b> : text}
         {!hideArrowInText && <ArrowDown borderColor={colors.textColor} />}
       </WrapperTitle>
       {!hideNavigation && (

@@ -12,16 +12,17 @@ import { usePrevious } from '../../utils';
 import { SliderAnimate } from '../SliderAnimate';
 
 export function DatesView() {
-  const { setMode, currentDate, setDate, currentDateObj } = useData();
+  const { setMode, currentDate, setDate } = useData();
   const { year, month, date } = currentDate;
   const { list: days, additionalDayNextMonth } = useListMonth({ year, month });
   const prevMonth = usePrevious(month);
+  const goToNextMonth = (prevMonth ?? 0) > month;
 
   return (
     <AnimateContent selectedPrevMode="month">
       <Wrapper>
         <Header
-          text={format(currentDateObj, 'MMMM yyyy')}
+          text={<TextHeader goToNextMonth={goToNextMonth} />}
           onTitleClick={() => setMode('month')}
           onRightClick={() => setDate({ month: month + 1, date: undefined })}
           onLeftClick={() => setDate({ month: month - 1, date: undefined })}
@@ -35,10 +36,7 @@ export function DatesView() {
           <span>S</span>
           <span>S</span>
         </BaseWeek>
-        <SliderAnimate
-          isMoveToLeft={(prevMonth ?? 0) > month}
-          customKey={month}
-        >
+        <SliderAnimate isMoveToLeft={goToNextMonth} customKey={month}>
           <BaseMonth>
             {days.map(day => (
               <ShowDate
@@ -58,6 +56,23 @@ export function DatesView() {
         </SliderAnimate>
       </Wrapper>
     </AnimateContent>
+  );
+}
+
+function TextHeader({ goToNextMonth }: { goToNextMonth: boolean }) {
+  const { currentDateObj } = useData();
+  const monthText = format(currentDateObj, 'MMM ');
+  const yearText = format(currentDateObj, 'yyyy');
+
+  return (
+    <>
+      <SliderAnimate isMoveToLeft={goToNextMonth} customKey={monthText}>
+        {monthText}
+      </SliderAnimate>
+      <SliderAnimate isMoveToLeft={goToNextMonth} customKey={yearText}>
+        {yearText}
+      </SliderAnimate>
+    </>
   );
 }
 
