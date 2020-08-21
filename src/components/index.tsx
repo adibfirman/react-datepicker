@@ -26,9 +26,12 @@ function Datepicker() {
   );
 }
 
-function WrapWithProvider({ currentDate }: Types.IValueComponent) {
+function WrapWithProvider({
+  value,
+  onChange = () => {},
+}: Types.IValueComponent) {
   return (
-    <Provider value={{ currentDate }}>
+    <Provider value={{ value, onChange }}>
       <Datepicker />
     </Provider>
   );

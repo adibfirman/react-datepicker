@@ -26,6 +26,6 @@ export default {
 export const Preview = () => (
   <>
     <GlobalStyle />
-    <Datepicker />
+    <Datepicker onChange={newDate => console.log(newDate)} />
   </>
 );

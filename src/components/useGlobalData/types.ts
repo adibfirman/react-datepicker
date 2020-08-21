@@ -10,8 +10,11 @@ export type TriggerAnimationType = {
   currMode: CalendarType;
 };
 
+export type OnChangeType = (date: Date) => Date | void;
+
 export interface IValueComponent {
-  currentDate?: Date;
+  value?: Date;
+  onChange?: OnChangeType;
 }
 
 export type SetModeType = React.Dispatch<React.SetStateAction<CalendarType>>;
@@ -24,7 +27,7 @@ export type DateType = {
 
 export type SetDateType = (SetDateType: Partial<DateType>) => void;
 
-export type StateType = {
+export interface StateType extends IValueComponent {
   colors: ColorsType;
   title: string;
   mode: CalendarType;
@@ -38,7 +41,7 @@ export type StateType = {
   currentDate: DateType;
   setDate: SetDateType;
   currentDateObj: Date;
-};
+}
 
 export type PropsType = {
   children: React.ReactChild;

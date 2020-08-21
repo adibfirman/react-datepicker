@@ -11,7 +11,7 @@ import * as Types from './types';
 import { SliderAnimate } from '../SliderAnimate';
 
 export function DatesView() {
-  const { setMode, currentDate, setDate } = useData();
+  const { setMode, currentDate, setDate, onChange, currentDateObj } = useData();
   const { year, month, date } = currentDate;
   const { list: days, additionalDayNextMonth } = useListMonth({ year, month });
   const [isMoveLeft, setMoveLeft] = useState(false);
@@ -49,10 +49,7 @@ export function DatesView() {
             {days.map(day => (
               <ShowDate
                 key={day}
-                day={day}
-                date={date}
-                setMode={setMode}
-                setDate={setDate}
+                {...{ day, date, setMode, setDate, onChange, currentDateObj }}
               />
             ))}
             {additionalDayNextMonth.map((day, i) => (
@@ -84,10 +81,18 @@ function TextHeader({ goToNextMonth }: { goToNextMonth: boolean }) {
   );
 }
 
-function ShowDate({ day, date, setMode, setDate }: Types.IPropsDate) {
+function ShowDate({
+  day,
+  date,
+  setMode,
+  setDate,
+  currentDateObj,
+  ...props
+}: Types.IPropsDate) {
   function handlelClick() {
     setDate({ date: day });
     setMode('selected_date');
+    if (props?.onChange) props.onChange(currentDateObj);
   }
 
   return (

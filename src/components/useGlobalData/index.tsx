@@ -20,7 +20,7 @@ export const COLOR_DATA: Types.ColorDataType = {
 
 export function Provider({ children, ...props }: Types.PropsType) {
   const [title, setTitle] = useState('');
-  const [mode, setMode] = useState<Types.CalendarType>('date');
+  const [mode, setMode] = useState<Types.CalendarType>('selected_date');
   const prevMode = usePrevious(mode);
   const [prevColors, setPrevColors] = useState<Types.ColorsType | null>(null);
   const animateBgColor = useAnimation();
@@ -32,7 +32,8 @@ export function Provider({ children, ...props }: Types.PropsType) {
   }, [mode]);
 
   const [currentDate, setCurrentDate] = useState<Types.DateType>(() => {
-    const getDate = props.value?.currentDate ?? new Date();
+    const currentDate = props.value?.value;
+    const getDate = currentDate ?? new Date();
     return {
       year: getDate.getFullYear(),
       month: getDate.getMonth(),
@@ -106,6 +107,7 @@ export function Provider({ children, ...props }: Types.PropsType) {
   return (
     <context.Provider
       value={{
+        onChange: props.value.onChange,
         currentDateObj,
         setDate,
         currentDate,
