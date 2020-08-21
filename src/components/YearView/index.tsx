@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 import { WrapperList, Wrapper } from './styles';
@@ -6,7 +6,6 @@ import { useData, Types, COLOR_DATA } from '../useGlobalData';
 import Header from '../Header';
 import { AnimateContent } from '../AnimateContent';
 import { SliderAnimate } from '../SliderAnimate';
-import { usePrevious } from '../../utils';
 
 const ANIMATED = {
   whileHover: ({ colors }: { colors: Types.ColorsType }) => ({
@@ -38,7 +37,6 @@ export function YearView() {
   const { colors, triggerAnimation, setDate, setMode, ...data } = useData();
   const { year: selectedYear } = data.currentDate;
   const [page, setPage] = useState(0);
-  const prevPage = usePrevious(page);
   const [isMoveLeft, setIsMoveLeft] = useState(false);
   const [years, setYears] = useState(() => {
     const thisYear = new Date().getFullYear();
