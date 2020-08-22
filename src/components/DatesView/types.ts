@@ -5,8 +5,6 @@ export interface IPropsDate {
   date: number; // selected day in month
   setMode: Types.SetModeType;
   setDate: Types.SetDateType;
-  onChange?: Types.OnChangeType;
-  currentDateObj: Date;
 }
 
 export interface IUseListMonth {

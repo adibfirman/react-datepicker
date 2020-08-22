@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useContext,
   useState,
+  useEffect,
 } from 'react';
 import { useAnimation } from 'framer-motion';
 import { usePrevious } from '../../utils';
@@ -20,7 +21,7 @@ export const COLOR_DATA: Types.ColorDataType = {
 
 export function Provider({ children, ...props }: Types.PropsType) {
   const [title, setTitle] = useState('');
-  const [mode, setMode] = useState<Types.CalendarType>('date');
+  const [mode, setMode] = useState<Types.CalendarType>('selected_date');
   const prevMode = usePrevious(mode);
   const [prevColors, setPrevColors] = useState<Types.ColorsType | null>(null);
   const animateBgColor = useAnimation();
@@ -99,10 +100,19 @@ export function Provider({ children, ...props }: Types.PropsType) {
     });
   }
 
+  useEffect(() => {
+    if (
+      prevMode === 'date' &&
+      mode === 'selected_date' &&
+      props.value.onChange
+    ) {
+      props.value.onChange(currentDateObj);
+    }
+  }, [prevMode, mode, props.value, currentDateObj]);
+
   return (
     <context.Provider
       value={{
-        onChange: props.value.onChange,
         currentDateObj,
         setDate,
         currentDate,

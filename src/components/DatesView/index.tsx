@@ -11,7 +11,7 @@ import * as Types from './types';
 import { SliderAnimate } from '../SliderAnimate';
 
 export function DatesView() {
-  const { setMode, currentDate, setDate, onChange, currentDateObj } = useData();
+  const { setMode, currentDate, setDate } = useData();
   const { year, month, date } = currentDate;
   const { prevMonthOfDays, thisMonthOfDays, nextMonthOfDays } = useListMonth({
     year,
@@ -55,27 +55,13 @@ export function DatesView() {
               </span>
             ))}
             {thisMonthOfDays.map(day => (
-              <ShowDate
-                key={day}
-                {...{ day, date, setMode, setDate, onChange, currentDateObj }}
-              />
+              <ShowDate key={day} {...{ day, date, setMode, setDate }} />
             ))}
             {nextMonthOfDays.map((day, i) => (
               <span key={i} className="disabled">
                 {day}
               </span>
             ))}
-            {/* {days.map(day => (
-              <ShowDate
-                key={day}
-                {...{ day, date, setMode, setDate, onChange, currentDateObj }}
-              />
-            ))}
-            {prevMonthOfDays.map((day, i) => (
-              <span key={i} className="disabled">
-                {day}
-              </span>
-            ))} */}
           </BaseMonth>
         </SliderAnimate>
       </Wrapper>
@@ -100,18 +86,10 @@ function TextHeader({ goToNextMonth }: { goToNextMonth: boolean }) {
   );
 }
 
-function ShowDate({
-  day,
-  date,
-  setMode,
-  setDate,
-  currentDateObj,
-  ...props
-}: Types.IPropsDate) {
+function ShowDate({ day, date, setMode, setDate }: Types.IPropsDate) {
   function handlelClick() {
     setDate({ date: day });
     setMode('selected_date');
-    if (props?.onChange) props.onChange(currentDateObj);
   }
 
   return (
