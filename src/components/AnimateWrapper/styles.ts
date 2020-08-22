@@ -13,8 +13,8 @@ export const Wrapper = styled(motion.div)`
 
   &[data-isopen='true'] {
     width: 330px;
-    height: 330px;
-    bottom: -27vh;
+    height: 380px;
+    bottom: -34vh;
     padding: 0;
     border-radius: 3px;
     box-shadow: 8px 12px 20px 0px #0000005e;

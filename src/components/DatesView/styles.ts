@@ -45,9 +45,19 @@ export const BaseMonth = styled.div`
       color: #fff;
     }
 
-    ~ .disabled {
+    &.disabled {
       color: rgba(51, 51, 51, 0.5);
       cursor: not-allowed;
     }
   }
+`;
+
+export const WrapperTextHeader = styled.div`
+  display: grid;
+  height: 44px;
+  width: 88px;
+  grid-auto-flow: column;
+  align-content: center;
+  margin-top: -23px;
+  margin-right: 8px;
 `;

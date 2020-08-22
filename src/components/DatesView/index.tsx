@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 
-import { BaseWeek, Wrapper, BaseMonth } from './styles';
+import { BaseWeek, WrapperTextHeader, Wrapper, BaseMonth } from './styles';
 import Header from '../Header';
 import { useData } from '../useGlobalData';
 import { useListMonth } from './useHooks';
@@ -13,7 +13,10 @@ import { SliderAnimate } from '../SliderAnimate';
 export function DatesView() {
   const { setMode, currentDate, setDate, onChange, currentDateObj } = useData();
   const { year, month, date } = currentDate;
-  const { list: days, additionalDayNextMonth } = useListMonth({ year, month });
+  const { prevMonthOfDays, thisMonthOfDays, nextMonthOfDays } = useListMonth({
+    year,
+    month,
+  });
   const [isMoveLeft, setMoveLeft] = useState(false);
 
   function handleNextMonth() {
@@ -36,27 +39,43 @@ export function DatesView() {
           onLeftClick={handlePrevMonth}
         />
         <BaseWeek>
+          <span>S</span>
           <span>M</span>
           <span>T</span>
           <span>W</span>
           <span>T</span>
           <span>F</span>
           <span>S</span>
-          <span>S</span>
         </BaseWeek>
         <SliderAnimate isMoveToLeft={isMoveLeft} customKey={month}>
           <BaseMonth>
-            {days.map(day => (
+            {prevMonthOfDays.map((day, i) => (
+              <span key={i} className="disabled">
+                {day}
+              </span>
+            ))}
+            {thisMonthOfDays.map(day => (
               <ShowDate
                 key={day}
                 {...{ day, date, setMode, setDate, onChange, currentDateObj }}
               />
             ))}
-            {additionalDayNextMonth.map((day, i) => (
+            {nextMonthOfDays.map((day, i) => (
               <span key={i} className="disabled">
                 {day}
               </span>
             ))}
+            {/* {days.map(day => (
+              <ShowDate
+                key={day}
+                {...{ day, date, setMode, setDate, onChange, currentDateObj }}
+              />
+            ))}
+            {prevMonthOfDays.map((day, i) => (
+              <span key={i} className="disabled">
+                {day}
+              </span>
+            ))} */}
           </BaseMonth>
         </SliderAnimate>
       </Wrapper>
@@ -70,14 +89,14 @@ function TextHeader({ goToNextMonth }: { goToNextMonth: boolean }) {
   const yearText = format(currentDateObj, 'yyyy');
 
   return (
-    <>
+    <WrapperTextHeader>
       <SliderAnimate isMoveToLeft={goToNextMonth} customKey={monthText}>
         {monthText}
       </SliderAnimate>
       <SliderAnimate isMoveToLeft={goToNextMonth} customKey={yearText}>
         {yearText}
       </SliderAnimate>
-    </>
+    </WrapperTextHeader>
   );
 }
 

@@ -7,17 +7,14 @@ import * as Types from './types';
 const variants = {
   initial: (isMoveToLeft: boolean) => ({
     x: isMoveToLeft ? -1000 : 1000,
-    display: 'initial',
     opacity: 0,
   }),
   animate: {
     x: 0,
-    display: 'unset',
     opacity: 1,
   },
   exit: (isMoveToLeft: boolean) => ({
     x: isMoveToLeft ? 1000 : -1000,
-    display: 'none',
     opacity: 0,
   }),
 };
@@ -25,7 +22,6 @@ const variants = {
 const transition = {
   x: { type: 'spring', stiffness: 80, damping: 20 },
   opacity: { duration: 1 },
-  display: { duration: 0 },
 };
 
 export function SliderAnimate({
@@ -44,7 +40,7 @@ export function SliderAnimate({
           initial="initial"
           animate="animate"
           exit="exit"
-          style={{ height, width: '100%' }}
+          style={{ height, width: '100%', position: 'absolute' }}
           transition={transition}
         >
           {children}
