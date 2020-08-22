@@ -15,6 +15,12 @@ export type OnChangeType = (date: Date) => Date | void;
 export interface IValueComponent {
   value?: Date;
   onChange?: OnChangeType;
+  customColor?: {
+    selected_date?: ColorsType;
+    date?: ColorsType;
+    month?: ColorsType;
+    year?: ColorsType;
+  };
 }
 
 export type SetModeType = React.Dispatch<React.SetStateAction<CalendarType>>;

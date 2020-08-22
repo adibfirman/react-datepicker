@@ -26,12 +26,9 @@ function Datepicker() {
   );
 }
 
-function WrapWithProvider({
-  value,
-  onChange = () => {},
-}: Types.IValueComponent) {
+function WrapWithProvider(props: Types.IValueComponent) {
   return (
-    <Provider value={{ value, onChange }}>
+    <Provider value={props}>
       <Datepicker />
     </Provider>
   );

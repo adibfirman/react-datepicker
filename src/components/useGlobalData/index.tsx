@@ -27,7 +27,8 @@ export function Provider({ children, ...props }: Types.PropsType) {
   const animateBgColor = useAnimation();
   const refEleParent = useRef<HTMLDivElement>(null!);
   const colors = useMemo(() => {
-    const { bgColor, textColor } = COLOR_DATA[mode];
+    const combineColors = { ...COLOR_DATA, ...props.value.customColor };
+    const { bgColor, textColor } = combineColors[mode];
 
     return { bgColor, textColor } as const;
   }, [mode]);
