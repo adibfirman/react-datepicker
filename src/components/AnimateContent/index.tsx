@@ -8,12 +8,17 @@ interface IProps extends React.HtmlHTMLAttributes<HTMLElement> {
   withTransitionWhen?: boolean;
 }
 
-const TRANSITION_ANIMATION = {
-  delay: 0.38,
-  type: 'spring',
-  stiffness: 100,
-  restDelta: 5,
-  restSpeed: 2,
+const VARIANTS = {
+  animate: ({ withDelayTransition }: { withDelayTransition: boolean }) => ({
+    opacity: 1,
+    transition: {
+      delay: withDelayTransition ? 0.29 : 0,
+    },
+  }),
+  initial: {
+    opacity: 0,
+    height: '100%',
+  },
 };
 
 export function AnimateContent({
@@ -23,13 +28,15 @@ export function AnimateContent({
   onClick,
 }: React.PropsWithChildren<IProps>) {
   const { prevMode } = useData();
-  const usingTransition = withTransitionWhen || prevMode === selectedPrevMode;
+  const withDelayTransition =
+    withTransitionWhen || prevMode === selectedPrevMode;
 
   return (
     <motion.div
-      animate={{ opacity: 1 }}
-      initial={{ opacity: 0, height: '100%' }}
-      transition={usingTransition ? TRANSITION_ANIMATION : {}}
+      animate="animate"
+      initial="initial"
+      variants={VARIANTS}
+      custom={{ withDelayTransition }}
       onClick={onClick}
     >
       {children}

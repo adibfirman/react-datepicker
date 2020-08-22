@@ -20,7 +20,7 @@ export const COLOR_DATA: Types.ColorDataType = {
 
 export function Provider({ children, ...props }: Types.PropsType) {
   const [title, setTitle] = useState('');
-  const [mode, setMode] = useState<Types.CalendarType>('selected_date');
+  const [mode, setMode] = useState<Types.CalendarType>('month');
   const prevMode = usePrevious(mode);
   const [prevColors, setPrevColors] = useState<Types.ColorsType | null>(null);
   const animateBgColor = useAnimation();
@@ -78,10 +78,8 @@ export function Provider({ children, ...props }: Types.PropsType) {
       backgroundColor: bgColor,
       scale: 70,
       transition: {
-        type: 'spring',
-        stiffness: 50,
-        restSpeed: 2,
-        restDelta: 5,
+        backgroundColor: { duration: 0 },
+        scale: { type: 'spring', stiffness: 50, restDelta: 5, restSpeed: 1.7 },
       },
     });
 
@@ -90,10 +88,7 @@ export function Provider({ children, ...props }: Types.PropsType) {
     await animateBgColor.start({
       backgroundColor: 'rgba(255, 255, 255, 0)',
       transition: {
-        type: 'spring',
-        stiffness: 100,
-        restSpeed: 2,
-        restDelta: 5,
+        duration: 0,
       },
     });
 

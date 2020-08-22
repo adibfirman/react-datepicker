@@ -12,10 +12,10 @@ const GlobalStyle = createGlobalStyle`
     height: 100vh;
     width: 100%;
     margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 `;
 

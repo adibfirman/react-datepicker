@@ -23,7 +23,7 @@ const variants = {
 };
 
 const transition = {
-  x: { type: 'spring', stiffness: 70, damping: 200 },
+  x: { type: 'spring', stiffness: 80, damping: 20 },
   opacity: { duration: 1 },
   display: { duration: 0 },
 };
