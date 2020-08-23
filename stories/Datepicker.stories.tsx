@@ -26,9 +26,6 @@ export default {
 export const Preview = () => (
   <>
     <GlobalStyle />
-    <Datepicker
-      onChange={newDate => console.log(newDate)}
-      customColor={{ year: { bgColor: 'red', textColor: 'green' } }}
-    />
+    <Datepicker onChange={newDate => console.log(newDate)} />
   </>
 );
