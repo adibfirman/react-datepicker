@@ -3,7 +3,7 @@
 An awesome Datepicker for your React APP, built in with [Framer-motion](https://www.framer.com/api/motion/)
 
 <p align="center">
-  <img src='https://github.com/adibfirman/reducer-logger/raw/master/media/result.png' />
+  <img src='https://raw.githubusercontent.com/adibfirman/react-datepicker/master/docs/example.gif' />
 </p>
 
 ## Installation
