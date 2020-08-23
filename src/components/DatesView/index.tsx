@@ -26,7 +26,12 @@ export function DatesView() {
 
   function handlePrevMonth() {
     setMoveLeft(true);
-    setDate({ month: month - 1, date: undefined });
+
+    // make sure the animation signfy to left first
+    const timeoutToChangeDate = setTimeout(() => {
+      setDate({ month: month - 1, date: undefined });
+      clearTimeout(timeoutToChangeDate);
+    }, 0);
   }
 
   return (

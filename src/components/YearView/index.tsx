@@ -71,7 +71,12 @@ export function YearView() {
 
     setYears(generateYears);
     setIsMoveLeft(true);
-    setPage(prevPage => prevPage - 1);
+
+    // make sure the animation signfy to left first
+    const timeoutGoToPrevPage = setTimeout(() => {
+      setPage(prevPage => prevPage - 1);
+      clearTimeout(timeoutGoToPrevPage);
+    }, 0);
   }
 
   return (

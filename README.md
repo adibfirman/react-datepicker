@@ -29,13 +29,13 @@ $ yarn add @adibfirman/react-datepicker
 - `onChange(date) => void`
   - Function where the callback is selected date
 - `customColor` an object which the value is one of these
-  - `selected_date`: `{ bgColor: string; textColor: string };
+  - `selected_date`: `{ bgColor: string; textColor: string };`
     - Default value is: `{ textColor: '#000', bgColor: '#fff' }`
-  - `date`: `{ bgColor: string; textColor: string };
+  - `date`: `{ bgColor: string; textColor: string };`
     - Default value is: `{ textColor: '#000', bgColor: '#fff' }`
-  - `month`: `{ bgColor: string; textColor: string };
+  - `month`: `{ bgColor: string; textColor: string };`
     - Default value is: `{ textColor: '#fff', bgColor: '#2196f3' }`
-  - `year`: `{ bgColor: string; textColor: string };
+  - `year`: `{ bgColor: string; textColor: string };`
     - Default value is: `{ textColor: '#fff', bgColor: '#39373A' }`
 
 ## Usage
