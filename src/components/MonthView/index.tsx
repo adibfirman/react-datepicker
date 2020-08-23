@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 
 import { WrapperList, Wrapper } from './styles';
-import { useData, COLOR_DATA } from '../useGlobalData';
+import { useData } from '../useGlobalData';
 import Header from '../Header';
 import { AnimateContent } from '../AnimateContent';
 import { LIST_MONTH, ANIMATED_EACH_OF_MONTH } from './constants';
@@ -32,7 +32,7 @@ export function MonthView() {
           onTitleClick={() => setMode('year')}
           hideNavigation
         />
-        <WrapperList {...colors}>
+        <WrapperList listMonthColors={data.colorsData.date} {...colors}>
           {LIST_MONTH.map((month, i) => (
             <motion.span
               key={i}
@@ -40,7 +40,7 @@ export function MonthView() {
               variants={ANIMATED_EACH_OF_MONTH}
               whileHover="whileHover"
               data-isselected={!!currMonth && month === selectedMonthText}
-              custom={{ colors: COLOR_DATA.date }}
+              custom={{ colors: data.colorsData.date }}
             >
               {month}
             </motion.span>

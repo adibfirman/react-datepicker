@@ -2,7 +2,14 @@ import { AnimationControls } from 'framer-motion';
 
 export type ColorsType = { bgColor: string; textColor: string };
 
-export type CalendarType = 'selected_date' | 'date' | 'month' | 'year';
+type ColorCalendarType = {
+  selected_date: ColorsType;
+  date: ColorsType;
+  month: ColorsType;
+  year: ColorsType;
+};
+
+export type CalendarType = keyof ColorCalendarType;
 
 export type TriggerAnimationType = {
   childEle: HTMLElement;
@@ -15,12 +22,7 @@ export type OnChangeType = (date: Date) => Date | void;
 export interface IValueComponent {
   value?: Date;
   onChange?: OnChangeType;
-  customColor?: {
-    selected_date?: ColorsType;
-    date?: ColorsType;
-    month?: ColorsType;
-    year?: ColorsType;
-  };
+  customColor?: Partial<ColorCalendarType>;
 }
 
 export type SetModeType = React.Dispatch<React.SetStateAction<CalendarType>>;
@@ -47,6 +49,7 @@ export interface StateType extends IValueComponent {
   currentDate: DateType;
   setDate: SetDateType;
   currentDateObj: Date;
+  colorsData: Partial<ColorCalendarType>;
 }
 
 export type PropsType = {

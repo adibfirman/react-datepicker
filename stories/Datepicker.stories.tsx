@@ -28,7 +28,7 @@ export const Preview = () => (
     <GlobalStyle />
     <Datepicker
       onChange={newDate => console.log(newDate)}
-      customColor={{ selected_date: { bgColor: 'red', textColor: 'green' } }}
+      customColor={{ date: { bgColor: 'red', textColor: 'green' } }}
     />
   </>
 );

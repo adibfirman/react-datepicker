@@ -26,12 +26,8 @@ export function Provider({ children, ...props }: Types.PropsType) {
   const [prevColors, setPrevColors] = useState<Types.ColorsType | null>(null);
   const animateBgColor = useAnimation();
   const refEleParent = useRef<HTMLDivElement>(null!);
-  const colors = useMemo(() => {
-    const combineColors = { ...COLOR_DATA, ...props.value.customColor };
-    const { bgColor, textColor } = combineColors[mode];
-
-    return { bgColor, textColor } as const;
-  }, [mode]);
+  const mixColors = { ...COLOR_DATA, ...props.value.customColor };
+  const colors = useMemo(() => mixColors[mode], [mixColors, mode]);
 
   const [currentDate, setCurrentDate] = useState<Types.DateType>(() => {
     const currentDate = props.value?.value;
@@ -64,6 +60,7 @@ export function Provider({ children, ...props }: Types.PropsType) {
     const top = childBoundRect.top - (parentBoundRect?.top ?? 0);
     const left = childBoundRect.left - (parentBoundRect?.left ?? 0);
 
+    // const mixColors = { ...COLOR_DATA, ...props.value.customColor }
     const { bgColor } = COLOR_DATA[mode];
 
     setPrevColors(COLOR_DATA[currMode]);
@@ -127,6 +124,7 @@ export function Provider({ children, ...props }: Types.PropsType) {
         setTitle,
         colors,
         triggerAnimation,
+        colorsData: mixColors,
       }}
     >
       {children}

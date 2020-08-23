@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 import { Types } from '../useGlobalData';
 
+interface IWrapperList extends Types.ColorsType {
+  listMonthColors?: Types.ColorsType;
+}
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -9,7 +13,7 @@ export const Wrapper = styled.div`
   padding: 20px;
 `;
 
-export const WrapperList = styled.div<Types.ColorsType>`
+export const WrapperList = styled.div<IWrapperList>`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(5em, 1fr));
   justify-items: center;
@@ -28,8 +32,8 @@ export const WrapperList = styled.div<Types.ColorsType>`
     cursor: pointer;
 
     &[data-isselected='true'] {
-      background-color: #fff;
-      color: #000;
+      background-color: ${({ listMonthColors }) => listMonthColors?.bgColor};
+      color: ${({ listMonthColors }) => listMonthColors?.textColor};
     }
   }
 `;
