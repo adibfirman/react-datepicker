@@ -6,6 +6,14 @@ An awesome Datepicker for your React APP, built in with [Framer-motion](https://
   <img src='https://raw.githubusercontent.com/adibfirman/react-datepicker/master/docs/example.gif' />
 </p>
 
+## Install `peerdepedencies`
+
+```bash
+$ npm i --save styled-components
+# or
+$ yarn add styled-components
+```
+
 ## Installation
 
 ```bash
