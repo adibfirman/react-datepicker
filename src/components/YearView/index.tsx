@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 import { WrapperList, Wrapper } from './styles';
-import { useData, Types, COLOR_DATA } from '../useGlobalData';
+import { useData, Types } from '../useGlobalData';
 import Header from '../Header';
 import { AnimateContent } from '../AnimateContent';
 import { SliderAnimate } from '../SliderAnimate';
@@ -84,12 +84,12 @@ export function YearView() {
           onRightClick={onNextPage}
         />
         <SliderAnimate height="95%" isMoveToLeft={isMoveLeft} customKey={page}>
-          <WrapperList {...colors}>
+          <WrapperList monthColor={data.colorsData.month} {...colors}>
             {years.map((year, i) => (
               <motion.span
                 onClick={onClick(year)}
                 variants={ANIMATED}
-                custom={{ colors: COLOR_DATA.month }}
+                custom={{ colors: data.colorsData.month }}
                 whileHover="whileHover"
                 data-isselected={year === selectedYear}
                 key={i}
