@@ -61,9 +61,9 @@ export function Provider({ children, ...props }: Types.PropsType) {
     const left = childBoundRect.left - (parentBoundRect?.left ?? 0);
 
     // const mixColors = { ...COLOR_DATA, ...props.value.customColor }
-    const { bgColor } = COLOR_DATA[mode];
+    const { bgColor } = mixColors[mode];
 
-    setPrevColors(COLOR_DATA[currMode]);
+    setPrevColors(mixColors[currMode]);
 
     await animateBgColor.start({
       x: left + 25,
