@@ -18,7 +18,7 @@
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "release": "git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && yarn publish"
+    "release": "git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && yarn publish --access public"
   },
   "peerDependencies": {
     "react": ">=16"
@@ -34,9 +34,10 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@adibfirman/datepicker",
+  "name": "@adibfirman/react-datepicker",
   "author": "adibfirman",
   "module": "dist/datepicker.esm.js",
+  "private": false,
   "devDependencies": {
     "@babel/core": "^7.11.0",
     "@storybook/addon-actions": "^6.0.16",
