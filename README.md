@@ -42,7 +42,7 @@ $ yarn add @adibfirman/react-datepicker
 
 ```jsx
 import React from 'react';
-import { Datepicker } from '@adibfirman/datepicker';
+import { Datepicker } from '@adibfirman/react-datepicker'
 
 function MyApp() {
   return (
